@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>LSystemMaya</ProjectName>
+    <ProjectName>BodyReshaper</ProjectName>
     <ProjectGuid>{681412B0-F197-4A2F-9263-DEA2E8690146}</ProjectGuid>
     <RootNamespace>MyPlugin</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
@@ -396,19 +396,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="cylinder.cpp" />
-    <ClCompile Include="LSystem.cpp" />
-    <ClCompile Include="LSystemCmd.cpp" />
+    <ClCompile Include="BodyReshaper.cpp" />
     <ClCompile Include="PluginMain.cpp" />
     <ClCompile Include="vec.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cylinder.h" />
-    <ClInclude Include="LSystem.h" />
-    <ClInclude Include="LSystemCmd.h" />
-    <ClCompile Include="LSystemNode.cpp" />
-    <ClInclude Include="LSystemNode.h" />
-    <ClInclude Include="matrix.h" />
+    <ClInclude Include="BodyReshaper.h" />
     <ClInclude Include="vec.h" />
   </ItemGroup>
   <ItemGroup>

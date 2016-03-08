@@ -1,48 +1,83 @@
 if( `window -exists myWindow` ) deleteUI myWindow;
-window -title "Call L-System Command" myWindow;
+window -title "Body Reshaper" myWindow;
     columnLayout;
     
         rowLayout -numberOfColumns 2
                   -columnWidth2 340 340
                   -columnAlign2 "left" "right";
-            text -label "Browse for grammar files" -font "boldLabelFont";
-            button -label "Browse" -command "myReadFile()";
+            text -label "Step 1: Load Image" -font "boldLabelFont";
+            button -label "Browse" -command "myLoadImage()";
         setParent ..;
-        
-        scrollField -width 390 -editable true "myG";
     
-        frameLayout -label "L-System Parameters"
+        rowLayout -numberOfColumns 2
+                  -columnWidth2 340 340
+                  -columnAlign2 "left" "right";
+            text -label "Step 2: Load Template Model" -font "boldLabelFont";
+            button -label "Browse" -command "myLoadTemplateModel()";
+        setParent ..;
+    
+        rowLayout -numberOfColumns 2
+                  -columnWidth2 340 340
+                  -columnAlign2 "left" "right";
+            text -label "Step 3: Automatic Rigging" -font "boldLabelFont";
+            button -label "Browse" -command "myAutomaticRigging()";
+        setParent ..;
+    
+        frameLayout -label "Step 4: Shape Fitting"
                     -collapsable true;
             columnLayout -rowSpacing 5;
-                intSliderGrp -field true -min 0 -max 10 -value 2 -label "Iterations" "myI";
-                floatSliderGrp -field true -min 1 -max 10 -value 1 -label "Step size" "myS";
-                floatSliderGrp -field true -min 0 -max 180 -value 30 -label "Angle" "myD";
+                floatSliderGrp -field true -min 0 -max 1 -value 0.5 -label "Weight" "myWeight";
+                floatSliderGrp -field true -min 0 -max 1 -value 0.5 -label "Height" "myHeight";
+                floatSliderGrp -field true -min 0 -max 1 -value 0.5 -label "Girth" "myGirth";
             setParent ..;
         setParent ..;
         
         rowLayout -numberOfColumns 2 
                   -columnWidth2 340 340
                   -columnAlign2 "left" "right";
-            button -label "Create" -command "myCreate()";
+            button -label "Update" -command "myUpdate()";
             button -label "Cancel" -command "myCancel()";
         setParent ..;
         
 showWindow myWindow;
 
-global proc myReadFile(){
+global proc myLoadImage(){
+    
     string $file = `fileDialog`;
     int $fileId = `fopen $file "r"`;
     string $cmd = `fread $fileId $cmd`;
-    scrollField -edit -text $cmd "myG";
+    
+    //---load image---
 }
 
-global proc myCreate(){
-    int $i = `intSliderGrp -query -value "myI"`;
-    float $s = `floatSliderGrp -query -value "myS"`;
-    float $d = `floatSliderGrp -query -value "myD"`;
-    string $g = `scrollField -query -text "myG"`;
-    LSystemCmd -i $i -s $s -d $d -g $g;
-    deleteUI myWindow;
+global proc myLoadTemplateModel(){
+    
+    string $file = `fileDialog`;
+    
+    //---load template model---
+    file -import 
+        -type "OBJ" 
+        -ignoreVersion 
+        -ra true 
+        -mergeNamespacesOnClash false 
+        -namespace "body" 
+        -options "mo=1"  
+        -pr $file;
+    setAttr "body:Mesh.rotateX" -90;
+}
+
+global proc myAutomaticRigging(){
+    
+    //---automatic rigging---
+}
+
+global proc myUpdate(){
+    
+    float $i = `floatSliderGrp -query -value "myWeight"`;
+    float $s = `floatSliderGrp -query -value "myHeight"`;
+    float $d = `floatSliderGrp -query -value "myGirth"`;
+    
+    //---update---
 }
 
 global proc myCancel(){
