@@ -114,12 +114,15 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDebug|x64'">
     <TargetExt>.mll</TargetExt>
+    <TargetName>BodyReshaper</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetExt>.mll</TargetExt>
+    <TargetName>BodyReshaper</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetExt>.mll</TargetExt>
+    <TargetName>BodyReshaper</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDebug|Win32'">
     <Midl>
@@ -398,14 +401,9 @@
   <ItemGroup>
     <ClCompile Include="BodyReshaper.cpp" />
     <ClCompile Include="PluginMain.cpp" />
-    <ClCompile Include="vec.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BodyReshaper.h" />
-    <ClInclude Include="vec.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Command.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

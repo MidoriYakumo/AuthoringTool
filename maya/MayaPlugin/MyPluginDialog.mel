@@ -1,5 +1,5 @@
 if( `window -exists myWindow` ) deleteUI myWindow;
-window -title "Body Reshaper" myWindow;
+window -title "Figure Reshaper" myWindow;
     columnLayout;
     
         rowLayout -numberOfColumns 2
@@ -20,7 +20,7 @@ window -title "Body Reshaper" myWindow;
                   -columnWidth2 340 340
                   -columnAlign2 "left" "right";
             text -label "Step 3: Automatic Rigging" -font "boldLabelFont";
-            button -label "Browse" -command "myAutomaticRigging()";
+            button -label "Rig" -command "myAutomaticRigging()";
         setParent ..;
     
         frameLayout -label "Step 4: Shape Fitting"
@@ -44,10 +44,14 @@ showWindow myWindow;
 global proc myLoadImage(){
     
     string $file = `fileDialog`;
-    int $fileId = `fopen $file "r"`;
-    string $cmd = `fread $fileId $cmd`;
     
     //---load image---
+	imagePlane;
+	setAttr imagePlane1.imageName -type "string" $file;
+	int $mySize[] = `imagePlane -q -iz imagePlane1`;
+	float $myW = $mySize[0] * 1.0 / $mySize[1];
+	setAttr "imagePlane1.scaleX" $myW;
+	setAttr "imagePlane1.translateZ" -1;
 }
 
 global proc myLoadTemplateModel(){
