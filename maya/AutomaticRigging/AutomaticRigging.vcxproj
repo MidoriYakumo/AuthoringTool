@@ -45,7 +45,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -87,7 +87,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -156,29 +156,30 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="attachment.cpp" />
+    <ClCompile Include="discretization.cpp" />
+    <ClCompile Include="embedding.cpp" />
     <ClCompile Include="graphutils.cpp" />
     <ClCompile Include="indexer.cpp" />
     <ClCompile Include="intersector.cpp" />
     <ClCompile Include="lsqSolver.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mesh.cpp" />
-    <ClCompile Include="Pinocchio.cpp" />
     <ClCompile Include="pinocchioApi.cpp" />
+    <ClCompile Include="refinement.cpp" />
     <ClCompile Include="skeleton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="attachment.h" />
     <ClInclude Include="debugging.h" />
+    <ClInclude Include="deriv.h" />
     <ClInclude Include="dtree.h" />
     <ClInclude Include="graphutils.h" />
-    <ClInclude Include="hashutils.h" />
     <ClInclude Include="indexer.h" />
     <ClInclude Include="intersector.h" />
     <ClInclude Include="lsqSolver.h" />
     <ClInclude Include="mathutils.h" />
     <ClInclude Include="mesh.h" />
     <ClInclude Include="multilinear.h" />
-    <ClInclude Include="Pinocchio.h" />
     <ClInclude Include="pinocchioApi.h" />
     <ClInclude Include="pointprojector.h" />
     <ClInclude Include="quaddisttree.h" />

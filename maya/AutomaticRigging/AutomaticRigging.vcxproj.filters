@@ -21,9 +21,6 @@
     <ClCompile Include="mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Pinocchio.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pinocchioApi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -45,6 +42,15 @@
     <ClCompile Include="lsqSolver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="discretization.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="embedding.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="refinement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mesh.h">
@@ -56,13 +62,7 @@
     <ClInclude Include="vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Pinocchio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="pinocchioApi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="hashutils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="mathutils.h">
@@ -108,6 +108,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lsqSolver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="deriv.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

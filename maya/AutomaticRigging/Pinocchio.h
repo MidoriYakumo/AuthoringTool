@@ -20,14 +20,14 @@
 // from a DLL simpler. All files within this DLL are compiled with the PINOCCHIO_EXPORTS
 // symbol defined on the command line. this symbol should not be defined on any project
 // that uses this DLL. This way any other project whose source files include this file see 
-// PINOCCHIO_API functions as being imported from a DLL, whereas this DLL sees symbols
+//  functions as being imported from a DLL, whereas this DLL sees symbols
 // defined with this macro as being exported.
 #ifdef _WIN32
 #ifdef PINOCCHIO_EXPORTS
-#define PINOCCHIO_API __declspec(dllexport)
+#define  __declspec(dllexport)
 #else //PINOCCHIO_EXPORTS
-#define PINOCCHIO_API __declspec(dllimport)
+#define  __declspec(dllimport)
 #endif //PINOCCHIO_EXPORTS
 #else //_WIN32
-#define PINOCCHIO_API
+#define 
 #endif //_WIN32

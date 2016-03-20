@@ -54,7 +54,7 @@ namespace _HASH_NAMESPACE {
 
 #define _HASH_NAMESPACE stdext
 
-//using namespace _HASH_NAMESPACE;
+using namespace _HASH_NAMESPACE;
 
 namespace _HASH_NAMESPACE {
     template<class T> struct hash

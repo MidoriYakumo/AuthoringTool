@@ -21,7 +21,9 @@
 #include <queue>
 #include <set>
 #include <iostream>
-#include "hashutils.h"
+//#include "hashutils.h"
+#include <unordered_set>
+using std::unordered_set;
 #include "debugging.h"
 
 #ifdef TAUCS //TAUCS
@@ -156,7 +158,7 @@ vector<int> SPDMatrix::computePerm() const
 
     //initialize
     set<pair<int, int> > neighborSize;
-    vector<hash_set<int> > neighbors(sz);
+    vector<unordered_set<int> > neighbors(sz);
     for(i = 0; i < sz; ++i) {
         for(j = 0; j < (int)m[i].size() - 1; ++j) {
             neighbors[i].insert(m[i][j].first);

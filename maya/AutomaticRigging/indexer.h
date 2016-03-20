@@ -19,7 +19,7 @@
 #ifndef INDEXER_H
 #define INDEXER_H
 
-#include "hashutils.h"
+//#include "hashutils.h"
 #include "vector.h"
 
 template<class Node, int Dim>
@@ -51,8 +51,8 @@ class DumbIndexer
         Node *root;
 };
 
-extern PINOCCHIO_API unsigned int interLeaveLookupTable[32768];
-extern PINOCCHIO_API unsigned int interLeave3LookupTable[1024];
+extern  unsigned int interLeaveLookupTable[32768];
+extern  unsigned int interLeave3LookupTable[1024];
 
 inline unsigned int _lookup(const Vector2 &vec)
 {

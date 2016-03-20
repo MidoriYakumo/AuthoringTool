@@ -22,7 +22,7 @@
 #include <map>
 #include "graphutils.h"
 
-class PINOCCHIO_API Skeleton {
+class  Skeleton {
 public:
     Skeleton() {}
     
@@ -75,31 +75,31 @@ private:
     vector<double> cLengthV; //lengths of the compressed bones
 };
 
-class PINOCCHIO_API HumanSkeleton : public Skeleton
+class  HumanSkeleton : public Skeleton
 {
 public:
     HumanSkeleton();
 };
 
-class PINOCCHIO_API QuadSkeleton : public Skeleton
+class  QuadSkeleton : public Skeleton
 {
 public:
     QuadSkeleton();
 };
 
-class PINOCCHIO_API HorseSkeleton : public Skeleton
+class  HorseSkeleton : public Skeleton
 {
 public:
     HorseSkeleton();
 };
 
-class PINOCCHIO_API CentaurSkeleton : public Skeleton
+class  CentaurSkeleton : public Skeleton
 {
 public:
     CentaurSkeleton();
 };
 
-class PINOCCHIO_API FileSkeleton : public Skeleton
+class  FileSkeleton : public Skeleton
 {
 public:
     FileSkeleton(const std::string &filename);

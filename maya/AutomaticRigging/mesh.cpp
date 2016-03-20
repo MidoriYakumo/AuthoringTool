@@ -17,7 +17,7 @@
 */
 
 #include "mesh.h"
-#include "hashutils.h"
+//#include "hashutils.h"
 #include "utils.h"
 #include "debugging.h"
 #include <fstream>
@@ -53,8 +53,8 @@ Mesh::Mesh(const string &file)
         readOff(obj);        
     else if(string(file.end() - 4, file.end()) == string(".gts"))
         readGts(obj);
-    else if(string(file.end() - 4, file.end()) == string(".stl"))
-        readStl(obj);        
+    //else if(string(file.end() - 4, file.end()) == string(".stl"))
+    //    readStl(obj);        
     else {
         Debugging::out() << "I don't know what kind of file it is" << endl;
         return;
@@ -514,78 +514,78 @@ void Mesh::readGts(istream &strm)
     }
 }
 
-class StlVtx : public Vector3
-{
-public:
-    StlVtx(double x, double y, double z) : Vector3(x, y, z) {}
-    bool operator==(const StlVtx &o) const { return (*this)[0] == o[0] && (*this)[1] == o[1] && (*this)[2] == o[2]; }
-    bool operator<(const StlVtx &o) const { return (*this)[0] < o[0] || ((*this)[0] == o[0] &&
-        ((*this)[1] < o[1] || ((*this)[1] == o[1] && (*this)[2] < o[2]))); }
-};
-
-MAKE_HASH(StlVtx, return (int)(p[0] * 100000. + p[1] * 200000. + p[2] * 400000.););
-
-void Mesh::readStl(istream &strm)
-{
-    int i;
-    int lineNum = 0;
-    
-    hash_map<StlVtx, int> vertexIdx;
-    
-    vector<int> lastIdxs;
-    
-    Vector3 normal;
-    
-    while(!strm.eof()) {
-        ++lineNum;
-        
-        vector<string> words = readWords(strm);
-        
-        if(words.size() == 0)
-            continue;
-        if(words[0][0] == '#') //comment
-            continue;
-        
-        if(words[0] == string("vertex")) {
-            double x, y, z;
-            sscanf(words[1].c_str(), "%lf", &x);
-            sscanf(words[2].c_str(), "%lf", &y);
-            sscanf(words[3].c_str(), "%lf", &z);
-            
-            StlVtx cur(y, z, x);
-            int idx;
-            
-            if(vertexIdx.find(cur) == vertexIdx.end()) {
-                idx = vertices.size();
-                vertexIdx[cur] = idx;
-                vertices.resize(vertices.size() + 1);
-                vertices.back().pos = cur;
-            }
-            else
-                idx = vertexIdx[cur];
-            
-            lastIdxs.push_back(idx);
-            if(lastIdxs.size() > 3)
-                lastIdxs.erase(lastIdxs.begin());
-            continue;
-        }
-        
-        if(words[0] == string("endfacet")) {
-            if(lastIdxs[0] == lastIdxs[1] || lastIdxs[1] == lastIdxs[2] || lastIdxs[0] == lastIdxs[2]) {
-                Debugging::out() << "Duplicate vertex in triangle" << endl;
-                continue;
-            }
-            int first = edges.size();
-            edges.resize(edges.size() + 3);
-            for(i = 0; i < 3; ++i) {
-                edges[first + i].vertex = lastIdxs[i]; //indices in file are 0-based
-            }
-            continue;
-        }
-        
-        //otherwise continue -- unrecognized line
-    }
-}
+//class StlVtx : public Vector3
+//{
+//public:
+//    StlVtx(double x, double y, double z) : Vector3(x, y, z) {}
+//    bool operator==(const StlVtx &o) const { return (*this)[0] == o[0] && (*this)[1] == o[1] && (*this)[2] == o[2]; }
+//    bool operator<(const StlVtx &o) const { return (*this)[0] < o[0] || ((*this)[0] == o[0] &&
+//        ((*this)[1] < o[1] || ((*this)[1] == o[1] && (*this)[2] < o[2]))); }
+//};
+//
+//MAKE_HASH(StlVtx, return (int)(p[0] * 100000. + p[1] * 200000. + p[2] * 400000.););
+//
+//void Mesh::readStl(istream &strm)
+//{
+//    int i;
+//    int lineNum = 0;
+//    
+//    hash_map<StlVtx, int> vertexIdx;
+//    
+//    vector<int> lastIdxs;
+//    
+//    Vector3 normal;
+//    
+//    while(!strm.eof()) {
+//        ++lineNum;
+//        
+//        vector<string> words = readWords(strm);
+//        
+//        if(words.size() == 0)
+//            continue;
+//        if(words[0][0] == '#') //comment
+//            continue;
+//        
+//        if(words[0] == string("vertex")) {
+//            double x, y, z;
+//            sscanf(words[1].c_str(), "%lf", &x);
+//            sscanf(words[2].c_str(), "%lf", &y);
+//            sscanf(words[3].c_str(), "%lf", &z);
+//            
+//            StlVtx cur(y, z, x);
+//            int idx;
+//            
+//            if(vertexIdx.find(cur) == vertexIdx.end()) {
+//                idx = vertices.size();
+//                vertexIdx[cur] = idx;
+//                vertices.resize(vertices.size() + 1);
+//                vertices.back().pos = cur;
+//            }
+//            else
+//                idx = vertexIdx[cur];
+//            
+//            lastIdxs.push_back(idx);
+//            if(lastIdxs.size() > 3)
+//                lastIdxs.erase(lastIdxs.begin());
+//            continue;
+//        }
+//        
+//        if(words[0] == string("endfacet")) {
+//            if(lastIdxs[0] == lastIdxs[1] || lastIdxs[1] == lastIdxs[2] || lastIdxs[0] == lastIdxs[2]) {
+//                Debugging::out() << "Duplicate vertex in triangle" << endl;
+//                continue;
+//            }
+//            int first = edges.size();
+//            edges.resize(edges.size() + 3);
+//            for(i = 0; i < 3; ++i) {
+//                edges[first + i].vertex = lastIdxs[i]; //indices in file are 0-based
+//            }
+//            continue;
+//        }
+//        
+//        //otherwise continue -- unrecognized line
+//    }
+//}
 
 void Mesh::writeObj(const string &filename) const
 {

@@ -19,13 +19,15 @@
 #ifndef QUADDISTTREE_H
 #define QUADDISTTREE_H
 
-#include "hashutils.h"
+//#include "hashutils.h"
 #include "dtree.h"
 #include "multilinear.h"
 #include "intersector.h"
 #include "pointprojector.h"
 #include <numeric>
 #include <map>
+#include <unordered_map>
+using std::unordered_map;
 
 template<int Dim>
 class DistFunction : public Multilinear<double, Dim>
@@ -260,7 +262,7 @@ private:
         void setRect(const Rect3 &r) const { }
 
     private:
-        mutable hash_map<unsigned int, double> cache;
+        mutable unordered_map<unsigned int, double> cache;
         const ObjectProjector<3, Vec3Object> &proj;
         const RootNode *dTree;
     };

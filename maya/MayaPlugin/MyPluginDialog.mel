@@ -54,11 +54,14 @@ global proc myLoadImage(){
 	setAttr "imagePlane1.translateZ" -1;
 }
 
+global string $gMyBodyModel;
+
 global proc myLoadTemplateModel(){
     
-    string $file = `fileDialog`;
-    
+    global string $gMyBodyModel;
+	
     //---load template model---
+	$gMyBodyModel = `fileDialog`;
     file -import 
         -type "OBJ" 
         -ignoreVersion 
@@ -66,13 +69,16 @@ global proc myLoadTemplateModel(){
         -mergeNamespacesOnClash false 
         -namespace "body" 
         -options "mo=1"  
-        -pr $file;
-    setAttr "body:Mesh.rotateX" -90;
+        -pr $gMyBodyModel;
+    //setAttr "body:Mesh.rotateX" -90;
 }
 
 global proc myAutomaticRigging(){
     
+	global string $gMyBodyModel;
+	
     //---automatic rigging---
+	FigureReshaper -f $gMyBodyModel;
 }
 
 global proc myUpdate(){

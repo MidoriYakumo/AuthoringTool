@@ -42,7 +42,8 @@ struct MeshEdge
     int twin;
 };
 
-class PINOCCHIO_API Mesh {
+class 
+	Mesh {
 public:
     Mesh() : scale(1.) {}
     Mesh(const string &file);
@@ -59,7 +60,7 @@ private:
     void readOff(istream &strm);
     void readPly(istream &strm);
     void readGts(istream &strm);
-    void readStl(istream &strm);
+    //void readStl(istream &strm);
     void fixDupFaces();
     void sortEdges(); //sort edges so that triplets forming faces are adjacent
 
