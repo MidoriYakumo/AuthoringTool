@@ -60,7 +60,7 @@ MStatus BodyReshaper::doIt( const MArgList& args ){
 		MString createJointCmd( "joint -p " );
 
 		//output.embedding[ i ] = ( output.embedding[ i ] - mesh.toAdd ) / mesh.scale;
-		output.embedding[ i ] = ( output.embedding[ i ] - Vector3( .5, .5, .5 ) ) * 2. + Vector3( 0., 0., 1. );
+		output.embedding[ i ] = ( output.embedding[ i ] - Vector3( .5, .5, .5 ) ) * 2./* + Vector3( 0., 0., 1. )*/;
 		createJointCmd = createJointCmd 
 			+ output.embedding[ i ][ 0 ] + " " 
 			+ output.embedding[ i ][ 1 ] + " "
@@ -71,6 +71,7 @@ MStatus BodyReshaper::doIt( const MArgList& args ){
 	}
 
 	MString parentJointCmd = 
+		"jointDisplayScale 0.1; ikHandleDisplayScale 0.2;\n"
 		"select -r joint1; select -tgl joint0; parent;\n"
 		"select -r joint2; select -tgl joint1; parent;\n"
 		"select -r joint3; select -tgl joint0; parent;\n"
@@ -87,17 +88,42 @@ MStatus BodyReshaper::doIt( const MArgList& args ){
 		"select -r joint14; select -tgl joint13; parent;\n"
 		"select -r joint15; select -tgl joint0; parent;\n"
 		"select -r joint16; select -tgl joint15; parent;\n"
-		"select -r joint17; select -tgl joint16; parent;\n";
+		"select -r joint17; select -tgl joint16; parent;\n"
+		"select -r joint0; select -tgl body:Mesh; SmoothBindSkin;\n"
+		"setAttr skinCluster1.normalizeWeights 0;\n"
+		"ikHandle -sj joint4 -ee joint6;\n"
+		"ikHandle -sj joint8 -ee joint10;\n"
+		"ikHandle -sj joint12 -ee joint14;\n"
+		"ikHandle -sj joint15 -ee joint17;\n";
 
 	MGlobal::executeCommand( parentJointCmd );
 
 	for( int i = 0; i < ( int )mesh.vertices.size(); ++i ){
+
 		Vector< double, -1 > v = output.attachment->getWeights(i);
+		vector< double > weights( v.size() + 1, 0 );
+		vector< int > parent{ 0, 0, 1, 0, 2, 4, 5, 6, 2, 8, 9, 10, 0, 12, 13, 0, 15, 16 };
+		MString jointWeightCmd;
+
+		jointWeightCmd = jointWeightCmd
+			+ "select -r body:Mesh.vtx["
+			+ i
+			+ "]; skinPercent -normalize false -zeroRemainingInfluences true ";
+
 		for( int j = 0; j < v.size(); ++j ) {
+
 			double d = floor( 0.5 + v[j] * 10000. ) / 10000.;
-			//osAttachment << d << " ";
+
+			weights[ j + 1 ] += d * .5;
+			weights[ parent[ j + 1 ] ] += d * .5;
 		}
-		//osAttachment << endl;
+
+		for( int j = 0; j < weights.size(); ++j ){
+			jointWeightCmd = jointWeightCmd + "-transformValue joint" + j + " " + weights[ j ] + " ";
+		}
+
+		jointWeightCmd = jointWeightCmd + "skinCluster1;";
+		MGlobal::executeCommand( jointWeightCmd );
 	}
 
 	return MStatus::kSuccess;
