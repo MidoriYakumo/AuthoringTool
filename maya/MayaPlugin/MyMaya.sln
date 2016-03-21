@@ -10,6 +10,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BodyReshaper", "MyPlugin.vc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutomaticRigging", "..\AutomaticRigging\AutomaticRigging.vcxproj", "{6695B452-0E23-4BA8-B879-67A27B24EEBD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EncodeModel", "..\EncodeModel\EncodeModel.vcxproj", "{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -44,6 +46,18 @@ Global
 		{6695B452-0E23-4BA8-B879-67A27B24EEBD}.ReleaseDebug|Win32.Build.0 = Release|Win32
 		{6695B452-0E23-4BA8-B879-67A27B24EEBD}.ReleaseDebug|x64.ActiveCfg = Release|x64
 		{6695B452-0E23-4BA8-B879-67A27B24EEBD}.ReleaseDebug|x64.Build.0 = Release|x64
+		{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}.Debug|Win32.Build.0 = Debug|Win32
+		{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}.Debug|x64.ActiveCfg = Debug|x64
+		{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}.Debug|x64.Build.0 = Debug|x64
+		{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}.Release|Win32.ActiveCfg = Release|Win32
+		{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}.Release|Win32.Build.0 = Release|Win32
+		{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}.Release|x64.ActiveCfg = Release|x64
+		{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}.Release|x64.Build.0 = Release|x64
+		{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}.ReleaseDebug|Win32.ActiveCfg = Release|Win32
+		{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}.ReleaseDebug|Win32.Build.0 = Release|Win32
+		{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}.ReleaseDebug|x64.ActiveCfg = Release|x64
+		{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}.ReleaseDebug|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
