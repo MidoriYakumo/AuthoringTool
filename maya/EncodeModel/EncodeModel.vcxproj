@@ -145,6 +145,11 @@
   <ItemGroup>
     <ClCompile Include="MatrixManipulation.cpp" />
     <ClCompile Include="ReadObj.cpp" />
+    <ClCompile Include="WriteObj.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ReadObj.h" />
+    <ClInclude Include="WriteObj.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
