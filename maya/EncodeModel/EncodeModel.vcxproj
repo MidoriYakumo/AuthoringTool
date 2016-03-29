@@ -161,6 +161,8 @@
     <ClInclude Include="GenerateSemBasis.h" />
     <ClInclude Include="GenerateShapeModel.h" />
     <ClInclude Include="LearnOptimalEstimator.h" />
+    <ClInclude Include="matrix.h" />
+    <ClInclude Include="mex.h" />
     <ClInclude Include="ReadObj.h" />
     <ClInclude Include="WriteObj.h" />
   </ItemGroup>

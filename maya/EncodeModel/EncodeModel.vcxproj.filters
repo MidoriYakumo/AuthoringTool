@@ -65,5 +65,11 @@
     <ClInclude Include="fullencode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="mex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
