@@ -146,14 +146,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DecodeDeltaRotation.cpp" />
+    <ClCompile Include="fullencode.cpp" />
+    <ClCompile Include="GenerateSemBasis.cpp" />
     <ClCompile Include="GenerateShapeModel.cpp" />
     <ClCompile Include="LearnOptimalEstimator.cpp" />
+    <ClCompile Include="MainFunctionHere.cpp" />
     <ClCompile Include="MatrixManipulation.cpp" />
     <ClCompile Include="ReadObj.cpp" />
     <ClCompile Include="WriteObj.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DecodeDeltaRotation.h" />
+    <ClInclude Include="fullencode.h" />
+    <ClInclude Include="GenerateSemBasis.h" />
     <ClInclude Include="GenerateShapeModel.h" />
     <ClInclude Include="LearnOptimalEstimator.h" />
     <ClInclude Include="ReadObj.h" />
