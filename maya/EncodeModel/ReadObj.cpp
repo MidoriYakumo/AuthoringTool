@@ -1,12 +1,13 @@
-#include<fstream>
-#include<string>
-#include<vector>
+//#include<fstream>
+//#include<string>
+//#include<vector>
+
+#include"ReadObj.h"
 
 using std::fstream;
 using std::string;
 using std::vector;
-
-void ReadObj(std::string filename);
+using std::ios;
 
 vector<vector<double>> vertices;
 vector<vector<int>> faces;
@@ -15,7 +16,7 @@ void ReadObj(std::string filename)
 {
 	double v1, v2, v3;
 	int f1, f2, f3;
-	fstream fin(filename);
+	fstream fin(filename, ios::in);
 	string input;
 	while (fin >> input)
 	{
