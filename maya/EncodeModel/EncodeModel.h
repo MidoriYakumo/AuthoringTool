@@ -16,6 +16,6 @@ void WriteObj( std::string filename, MatrixXd &vertices, MatrixXi &faces );
 void EncodeRelativeRotation( MatrixXd &vertices, MatrixXi &faces, MatrixXd &temp, MatrixXi &neighbors );
 void DecodeRelativeRotation( MatrixXd &input, MatrixXi &neighbors );
 
-MatrixXd ToRotVec(const MatrixXd &R);
-MatrixXd FromRotVec(MatrixXd &r);
+extern MatrixXd ToRotVec(const MatrixXd &R);
+extern MatrixXd FromRotVec(MatrixXd &r);
 MatrixXd Ortho(MatrixXd &R, int start = 1);
