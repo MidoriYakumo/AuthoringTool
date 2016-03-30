@@ -21,3 +21,23 @@
 %
 
 */
+
+#include "EncodeModel.h"
+
+#include <Eigen/Dense>
+using Eigen::MatrixXd;
+using Eigen::MatrixXi;
+
+void DecodeRelativeRotation( MatrixXd input, MatrixXi &neighbors ){
+
+	if( input.cols() == 1 ){
+		input.transposeInPlace();
+	}
+
+	int step( 15 );
+	int N( neighbors.rows() );
+	MatrixXd direction( 1, 3 ); direction.setZero();
+	int landmarks( 1 );
+	MatrixXd weight = MatrixXd::Ones( landmarks );
+
+}
