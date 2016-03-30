@@ -1,22 +1,22 @@
 // convert rotation matrix into rotation vector representation
-#include <iostream>
-#include <Eigen/Dense>
-#include <cmath>
-#include <Eigen/Geometry> 
-#include <vector>
-
-using Eigen::MatrixXd;
-using std::vector;
-
-class MatrixManipulation
-{
-public:
-	MatrixXd ToRotVec(const MatrixXd &R);
-	MatrixXd FromRotVec(MatrixXd &r);
-	MatrixXd Ortho(MatrixXd &R, int start = 1);
-	MatrixXd Morphto(MatrixXd start, int target);
-
-};
+#include "EncodeModel.h"
+//#include <iostream>
+//#include <Eigen/Dense>
+//#include <cmath>
+//#include <Eigen/Geometry> 
+//#include <vector>
+//
+//using Eigen::MatrixXd;
+//using std::vector;
+//
+//class MatrixManipulation
+//{
+//public:
+//	MatrixXd ToRotVec(const MatrixXd &R);
+//	MatrixXd FromRotVec(MatrixXd &r);
+//	MatrixXd Ortho(MatrixXd &R, int start = 1);
+//
+//};
 
 /*
 r = torotvec(R)
@@ -31,7 +31,7 @@ end
 r = r * (atan2(len, R(1,1)+R(2,2)+R(3,3)-1) / len);
 */
 
-MatrixXd MatrixManipulation::ToRotVec(const MatrixXd &R)
+MatrixXd /*MatrixManipulation::*/ToRotVec(const MatrixXd &R)
 {
 	MatrixXd Rt = R.transpose();
 	MatrixXd RRt = R - Rt;
@@ -64,7 +64,7 @@ r(3)  0    -r(1); ...
 R = R * sin(theta) + (R * R) * (1 - cos(theta)) + eye(3);
 end
 */
-MatrixXd MatrixManipulation::FromRotVec(MatrixXd &r)
+MatrixXd /*MatrixManipulation::*/FromRotVec(MatrixXd &r)
 {
 	MatrixXd A(3, 1);
 	MatrixXd R(3, 3);
@@ -109,7 +109,7 @@ Q(:,j) = v / norm(v);
 end
 A = Q;
 */
-MatrixXd MatrixManipulation::Ortho(MatrixXd &R, int start)
+MatrixXd /*MatrixManipulation::*/Ortho(MatrixXd &R, int start)
 {
 	int row = R.rows();
 	int column = R.cols();
@@ -144,50 +144,6 @@ MatrixXd MatrixManipulation::Ortho(MatrixXd &R, int start)
 	return R;
 }
 
-/*
-%
-% final = morphto(start, target, subjects, semvals)
-%
-% start vector, semantic target values, all subjects, and semantic values
-%
-% generates a semantic basis and morphs the start vector to the given
-% target values.If target is a matrix several output poses are generated.
-% One target per column.
-%
-% e.g.morph first scan to 60kg
-%
-% x = morphto(projected(:, 1), 60, projected, semvals(:, 6));
-%
-% Copyright 2009 (c)Nils Hasler hasler@mpi-inf.mpg.de
-% please cite
-% N.Hasler, C.Stoll, M.Sunkel, B.Rosenhahn, H. - P.Seidel: A Statistical Model of Human Pose and Body Shape,
-% Computer Graphics Forum(Proc.Eurographics 2009), Munich, Germany, March 2009.
-function[final, sem, means, B, K, est, Ssem] = morphto(start, target, subjects, semvals)
-
-[B, Ssem, means, K] = gensembasis(subjects, semvals);
-
-target = target - repmat(means, size(target, 1), 1);
-
-%K = Ssem(:, 1 : size(target, 2)) \ (semvals - repmat(means, size(semvals, 1), 1));
-
-final = zeros(length(start), size(target, 1));
-est = zeros(size(target));
-
-for i = 1:size(target, 1)
-% transform to semantic representation
-sem = start' * B;
-% morph to semantic target values
-sem(1:size(target, 2)) = target(i, :).*K;
-% and transform back
-final(:, i) = (sem / B)';
-
-% estimate semantic values to check the error
-est(i, :) = estsem(final(:, i), means, B, K);
-end
-*/
-MatrixXd MatrixManipulation::Morphto(MatrixXd start, int target)
-{
-
-}
+	 
 	 
  
