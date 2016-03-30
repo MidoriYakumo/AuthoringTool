@@ -28,6 +28,9 @@
 using Eigen::MatrixXd;
 using Eigen::MatrixXi;
 
+#include <Eigen/Sparse>
+using Eigen::SparseMatrix;
+
 void DecodeRelativeRotation( MatrixXd input, MatrixXi &neighbors ){
 
 	if( input.cols() == 1 ){
@@ -36,8 +39,48 @@ void DecodeRelativeRotation( MatrixXd input, MatrixXi &neighbors ){
 
 	int step( 15 );
 	int N( neighbors.rows() );
-	MatrixXd direction( 1, 3 ); direction.setZero();
+	MatrixXd direction = MatrixXd::Zero( 1, 3 );
 	int landmarks( 1 );
 	MatrixXd weight = MatrixXd::Ones( landmarks );
+	MatrixXd features = MatrixXd::Zero( 1, 10 * N );
+	SparseMatrix< double > A( 4 * N, 3 * N );
+	int row( 0 );
 
+	for( int i = 0; i < N; ++i ){
+		
+		int n( neighbors( i, 1 ) );
+
+		if( n > i ){
+
+			MatrixXd delta = FromRotVec( input.block( 0, i * step, 1, 3 ).transpose() );
+
+			A.block( row, ( n - 1 ) * 3, 3, 3 ) = MatrixXd::Ones( 3 ) * -1.0;
+			A.block( row, i * 3, 3, 3 ) = delta.transpose();
+			row += 3;
+		}
+
+		n = neighbors( i, 2 );
+
+		if( n > i ){
+
+			MatrixXd delta = FromRotVec( input.block( 0, i * step + 3, 1, 3 ).transpose() );
+
+			A.block( row, ( n - 1 ) * 3, 3, 3 ) = MatrixXd::Ones( 3 ) * -1.0;
+			A.block( row, i * 3, 3, 3 ) = delta.transpose();
+			row += 3;
+		}
+
+		n = neighbors( i, 3 );
+
+		if( n > i ){
+
+			MatrixXd delta = FromRotVec( input.block( 0, i * step + 6, 1, 3 ).transpose() );
+
+			A.block( row, ( n - 1 ) * 3 + 1, 3, 3 ) = MatrixXd::Ones( 3 ) * -1.0;
+			A.block( row, i * 3, 3, 3 ) = delta.transpose();
+			row += 3;
+		}
+
+		features.block( i * 10 + 4, i * 10 + 9 )
+	}
 }

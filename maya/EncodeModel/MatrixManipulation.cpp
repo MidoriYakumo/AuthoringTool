@@ -31,7 +31,7 @@ end
 r = r * (atan2(len, R(1,1)+R(2,2)+R(3,3)-1) / len);
 */
 
-MatrixXd /*MatrixManipulation::*/ToRotVec(const MatrixXd &R)
+MatrixXd /*MatrixManipulation::*/ToRotVec(MatrixXd R)
 {
 	MatrixXd Rt = R.transpose();
 	MatrixXd RRt = R - Rt;
@@ -64,7 +64,7 @@ r(3)  0    -r(1); ...
 R = R * sin(theta) + (R * R) * (1 - cos(theta)) + eye(3);
 end
 */
-MatrixXd /*MatrixManipulation::*/FromRotVec(MatrixXd &r)
+MatrixXd /*MatrixManipulation::*/FromRotVec(MatrixXd r)
 {
 	MatrixXd A(3, 1);
 	MatrixXd R(3, 3);
@@ -109,7 +109,7 @@ Q(:,j) = v / norm(v);
 end
 A = Q;
 */
-MatrixXd /*MatrixManipulation::*/Ortho(MatrixXd &R, int start)
+MatrixXd /*MatrixManipulation::*/Ortho(MatrixXd R, int start)
 {
 	int row = R.rows();
 	int column = R.cols();
