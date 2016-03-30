@@ -39,7 +39,7 @@ void DecodeRelativeRotation( MatrixXd input, MatrixXi &neighbors ){
 
 	int step( 15 );
 	int N( neighbors.rows() );
-	MatrixXd direction = MatrixXd::Zero( 1, 3 );
+	MatrixXd direction = MatrixXd::Zero( 3, 1 );
 	int landmarks( 1 );
 	MatrixXd weight = MatrixXd::Ones( landmarks );
 	MatrixXd features = MatrixXd::Zero( 1, 10 * N );
@@ -81,6 +81,20 @@ void DecodeRelativeRotation( MatrixXd input, MatrixXi &neighbors ){
 			row += 3;
 		}
 
-		features.block( i * 10 + 4, i * 10 + 9 )
+		features.block( 0, i * 10 + 4, 1, 5 ) = input.block( 0, i * step + 9, 1, 5 );
+	}
+
+	MatrixXd rhs = MatrixXd::Zero( A.rows(), 3 );
+
+	A.block( row, 0, 3, 3 ) = MatrixXd::Identity( 3, 3 );
+	rhs.block( row, 0, 3, 3 ) = FromRotVec( direction.transpose() ).transpose();
+	row += 3;
+
+	MatrixXd At = A.transpose();
+	MatrixXd Rs = ( At * A ).transpose() * ( At * rhs );
+
+	for( int i = 0; i < N; ++i ){
+		
+		MatrixXd Rt = svd( )
 	}
 }

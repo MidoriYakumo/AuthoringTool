@@ -1,3 +1,4 @@
+
 #include "EncodeSimple.h"
 
 #include "EncodeModel.h"
@@ -89,9 +90,9 @@ MatrixXd EncodeRelativeRotation(MatrixXd model, MatrixXd faces, MatrixXd temp, M
 		MatrixXd delta = Rs[i].inverse() * Rs[neigh(i, 0)];
 		result(i * step) = ToRotVec(delta)(0);
 		delta = Rs[i].inverse() * Rs[neigh(i, 1)];
-		result(i * step + 3) = ToRotVec(delta);
+		result(i * step + 3) = ToRotVec(delta)(0);
 		delta = Rs[i].inverse() * Rs[neigh(i, 2)];
-		result(i * step + 6) = ToRotVec(delta);
+		result(i * step + 6) = ToRotVec(delta)(0);
 	}
 
 }

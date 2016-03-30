@@ -145,7 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DecodeDeltaRotation.cpp" />
+    <ClCompile Include="DecodeRelativeRotation.cpp" />
     <ClCompile Include="DoPCA.cpp" />
     <ClCompile Include="EncodeSimple.cpp" />
     <ClCompile Include="estsem.cpp" />
