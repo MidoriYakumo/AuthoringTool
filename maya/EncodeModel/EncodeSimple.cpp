@@ -64,6 +64,7 @@ MatrixXd EncodeRelativeRotation(MatrixXd model, MatrixXd faces, MatrixXd temp, M
 		MatrixXd V1 = svd.matrixV();
 		int length = svd.singularValues().rows();
 		MatrixXd S1(length, length);
+		S1.setZero();
 		for (int i = 0; i < length; i++)
 		{
 			S1(i, i) = svd.singularValues()(i,0);
@@ -87,11 +88,18 @@ MatrixXd EncodeRelativeRotation(MatrixXd model, MatrixXd faces, MatrixXd temp, M
 	for (int i = 0; i < faces.rows(); i++)
 	{
 		MatrixXd delta = Rs[i].inverse() * Rs[neigh(i, 0)];
-		result(i * step) = ToRotVec(delta)(0);
+		result(i * step) = ToRotVec(delta)(0);   // the return value of the ToRotVec???!!!
+		result(i * step + 1)  = ToRotVec(delta)(1);
+		result(i * step + 2) = ToRotVec(delta)(2);
 		delta = Rs[i].inverse() * Rs[neigh(i, 1)];
-		result(i * step + 3) = ToRotVec(delta);
+		result(i * step + 3) = ToRotVec(delta)(0);
+		result(i * step + 4) = ToRotVec(delta)(1);
+		result(i * step + 5) = ToRotVec(delta)(2);
 		delta = Rs[i].inverse() * Rs[neigh(i, 2)];
-		result(i * step + 6) = ToRotVec(delta);
+		result(i * step + 6) = ToRotVec(delta)(0);
+		result(i * step + 7) = ToRotVec(delta)(1);
+		result(i * step + 8) = ToRotVec(delta)(2); //return value of this result ( the encoded model is a 1 * 193410 double matrix/vector can also be)
 	}
 
+	return result;
 }

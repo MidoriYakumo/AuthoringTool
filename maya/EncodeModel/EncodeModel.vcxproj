@@ -155,6 +155,7 @@
     <ClCompile Include="LearnOptimalEstimator.cpp" />
     <ClCompile Include="MainFunctionHere.cpp" />
     <ClCompile Include="MatrixManipulation.cpp" />
+    <ClCompile Include="PCA_SquareMatrix.cpp" />
     <ClCompile Include="ReadObj.cpp" />
     <ClCompile Include="Upright.cpp" />
     <ClCompile Include="WriteObj.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="LearnOptimalEstimator.h" />
     <ClInclude Include="matrix.h" />
     <ClInclude Include="mex.h" />
+    <ClInclude Include="PCA_SquareMatrix.h" />
     <ClInclude Include="ReadObj.h" />
     <ClInclude Include="Upright.h" />
     <ClInclude Include="WriteObj.h" />

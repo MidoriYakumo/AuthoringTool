@@ -54,6 +54,9 @@
     <ClCompile Include="Upright.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PCA_SquareMatrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ReadObj.h">
@@ -93,6 +96,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Upright.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PCA_SquareMatrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
