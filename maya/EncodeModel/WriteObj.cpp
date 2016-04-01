@@ -1,20 +1,12 @@
 #include "WriteObj.h"
 
-#include <Eigen/Dense>
-using Eigen::MatrixXd;
-using Eigen::MatrixXi;
-
 #include<fstream>
 using std::fstream;
 
-#include<string>
-using std::string;
-
-#include<vector>
-using std::vector;
-
 #include<ios>
 using std::ios;
+
+#include "EncodeModel.h"
 
 void WriteObj( std::string filename, MatrixXd &vertices, MatrixXi &faces ){
 

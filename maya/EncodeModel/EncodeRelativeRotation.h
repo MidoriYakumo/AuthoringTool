@@ -7,5 +7,3 @@
 #include <vector>
 
 using Eigen::MatrixXd;
-
-MatrixXd EncodeRelativeRotation(MatrixXd model, MatrixXd faces, MatrixXd temp, MatrixXd neigh);

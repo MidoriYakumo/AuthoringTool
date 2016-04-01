@@ -1,26 +1,8 @@
-// convert rotation matrix into rotation vector representation
+// conversion between rotation matrix and rotation vector representation
 #include "EncodeModel.h"
-//#include <iostream>
-//#include <Eigen/Dense>
-//#include <cmath>
-//#include <Eigen/Geometry> 
-//#include <vector>
-//
-//using Eigen::MatrixXd;
-//using std::vector;
-//
-//class MatrixManipulation
-//{
-//public:
-//	MatrixXd ToRotVec(const MatrixXd &R);
-//	MatrixXd FromRotVec(MatrixXd &r);
-//	MatrixXd Ortho(MatrixXd &R, int start = 1);
-//
-//};
 
 /*
-r = torotvec(R)
-convert rotation matrix into rotation vector representation
+function r = torotvec(R)
 
 RRt = R - R';
 r = [RRt(2,3);RRt(3,1);RRt(1,2)];
@@ -31,19 +13,18 @@ end
 r = r * (atan2(len, R(1,1)+R(2,2)+R(3,3)-1) / len);
 */
 
-MatrixXd /*MatrixManipulation::*/ToRotVec(MatrixXd R)
+Vector3d ToRotVec(Matrix3d R)
 {
-	MatrixXd Rt = R.transpose();
-	MatrixXd RRt = R - Rt;
-	MatrixXd r(3, 3);
-	r.setZero();
-	r(0, 0) = RRt(1, 2);
-	r(1, 0) = RRt(2, 0);
-	r(2, 0) = RRt(0, 1);
-	Eigen::JacobiSVD<MatrixXd> svd(r, Eigen::ComputeThinU | Eigen::ComputeThinV);
-	double len = svd.singularValues()[0];
-	if (len == 0)  return Eigen::Matrix3d::Identity(); //yi cuo dian 1
-	r = r * (std::atan2(len,R(0,0)+R(1,1)+R(2,2)-1));
+	Matrix3d RRt = R - R.transpose();
+	Vector3d r = { RRt( 1, 2 ), RRt( 2, 0 ), RRt( 0, 1 ) };
+	double len = r.norm();
+
+	if ( len == 0 ){
+		return Vector3d::Zero();
+	}
+
+	r = r * ( atan2( len, R( 0, 0 ) + R( 1, 1 ) + R( 2, 2 ) - 1 ) / len );
+
 	return r;
 }
 
@@ -64,23 +45,21 @@ r(3)  0    -r(1); ...
 R = R * sin(theta) + (R * R) * (1 - cos(theta)) + eye(3);
 end
 */
-MatrixXd /*MatrixManipulation::*/FromRotVec(MatrixXd r)
+
+Matrix3d FromRotVec( Vector3d r )
 {
-	MatrixXd A(3, 1);
-	MatrixXd R(3, 3);
-	R.setIdentity();
-	A(0, 0) = 1; A(1, 0) = 1; A(2, 0) = 1;
-	if (r == A) { return R.setIdentity();}
-	else 
-	{
-		Eigen::JacobiSVD<MatrixXd> svd(r, Eigen::ComputeThinU | Eigen::ComputeThinV);
-		double theta = svd.singularValues()[0];
+	Vector3d A = { 1., 1., 1. };
+	Matrix3d R = Matrix3d::Identity();
+
+	if ( r != A ){
+
+		double theta = r.norm();
+
 		r = -r / theta;
-		R(0, 0) = 0; R(0, 1) = -r(2, 0); R(0, 2) = r(1, 0);
-		R(1, 0) = r(2, 0); R(1, 1) = 0; R(1, 2) = -r(0, 0);
-		R(2, 0) = - r(1, 0); R(2, 1) = r(0, 0); R(2, 2) = 0;
-		R = R * std::sin(theta) + (R * R) * (1 - std::cos(theta)) + Eigen::Matrix3d::Identity();
+		R << 0, -r( 3 ), r( 2 ), r( 3 ), 0, -r( 1 ), -r( 2 ), r( 1 ), 0;
+		R = R * sin( theta ) + ( R * R ) * ( 1 - cos( theta ) ) + Matrix3d::Identity();
 	}
+
 	return R;
 }
 
@@ -109,8 +88,9 @@ Q(:,j) = v / norm(v);
 end
 A = Q;
 */
-MatrixXd /*MatrixManipulation::*/Ortho(MatrixXd R, int start)
-{
+
+MatrixXd Ortho( MatrixXd R, int start = 0 ){
+
 	int row = R.rows();
 	int column = R.cols();
 	MatrixXd Q(row, column);

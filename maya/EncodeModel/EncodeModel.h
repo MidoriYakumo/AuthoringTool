@@ -7,15 +7,25 @@ using std::string;
 using std::vector;
 
 #include <Eigen/Dense>
+using Eigen::Vector3d;
+using Eigen::Matrix3d;
 using Eigen::MatrixXd;
 using Eigen::MatrixXi;
+
+#include <Eigen/SVD>
+using Eigen::JacobiSVD;
+
+#include <cmath>
+using std::atan2;
+using std::sin;
+using std::cos;
 
 void ReadObj( std::string filename, MatrixXd &ret_vertices, MatrixXi &ret_faces );
 void WriteObj( std::string filename, MatrixXd &vertices, MatrixXi &faces );
 
-void EncodeRelativeRotation( MatrixXd &vertices, MatrixXi &faces, MatrixXd &temp, MatrixXi &neighbors );
-void DecodeRelativeRotation( MatrixXd &input, MatrixXi &neighbors );
+MatrixXd EncodeRelativeRotation(MatrixXd model, MatrixXd faces, MatrixXd temp, MatrixXd neigh);
+MatrixXd DecodeRelativeRotation( MatrixXd input, MatrixXi neigh );
 
-extern MatrixXd ToRotVec(MatrixXd R);
-extern MatrixXd FromRotVec(MatrixXd r);
-MatrixXd Ortho(MatrixXd R, int start = 1);
+Vector3d ToRotVec(Matrix3d R);
+Matrix3d FromRotVec(Vector3d r);
+MatrixXd Ortho( MatrixXd R, int start );

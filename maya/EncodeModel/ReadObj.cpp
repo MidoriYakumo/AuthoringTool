@@ -1,16 +1,6 @@
 
-#include <Eigen/Dense>
-using Eigen::MatrixXd;
-using Eigen::MatrixXi;
-
 #include <fstream>
 using std::fstream;
-
-#include <string>
-using std::string;
-
-#include <vector>
-using std::vector;
 
 #include <ios>
 using std::ios;
