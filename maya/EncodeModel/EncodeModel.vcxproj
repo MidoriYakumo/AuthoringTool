@@ -145,36 +145,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DecodeDeltaRotation.cpp" />
+    <ClCompile Include="DecodeRelativeRotation.cpp" />
     <ClCompile Include="DoPCA.cpp" />
-    <ClCompile Include="EncodeSimple.cpp" />
+    <ClCompile Include="EncodeRelativeRotation.cpp" />
     <ClCompile Include="estsem.cpp" />
-    <ClCompile Include="fullencode.cpp" />
     <ClCompile Include="GenerateSemBasis.cpp" />
     <ClCompile Include="GenerateShapeModel.cpp" />
     <ClCompile Include="LearnOptimalEstimator.cpp" />
     <ClCompile Include="MainFunctionHere.cpp" />
     <ClCompile Include="MatrixManipulation.cpp" />
-    <ClCompile Include="PCA_SquareMatrix.cpp" />
     <ClCompile Include="ReadObj.cpp" />
     <ClCompile Include="Upright.cpp" />
     <ClCompile Include="WriteObj.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DecodeDeltaRotation.h" />
     <ClInclude Include="DoPCA.h" />
     <ClInclude Include="EncodeModel.h" />
-    <ClInclude Include="EncodeSimple.h" />
-    <ClInclude Include="fullencode.h" />
     <ClInclude Include="GenerateSemBasis.h" />
     <ClInclude Include="GenerateShapeModel.h" />
     <ClInclude Include="LearnOptimalEstimator.h" />
-    <ClInclude Include="matrix.h" />
-    <ClInclude Include="mex.h" />
-    <ClInclude Include="PCA_SquareMatrix.h" />
-    <ClInclude Include="ReadObj.h" />
     <ClInclude Include="Upright.h" />
-    <ClInclude Include="WriteObj.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
