@@ -3,11 +3,11 @@
 
 MatrixXi LoadNeighbor(){
 
-	MatrixXi result( 6449, 3 );
+	MatrixXi result( 12894, 3 );
 	fstream fin( "neigh.dat", ios::in );
 	int a, b, c;
 
-	for( int i = 0; i < 6449; ++i ){
+	for( int i = 0; i < 12894; ++i ){
 		fin >> a >> b >> c;
 		result( i, 0 ) = a-1;
 		result( i, 1 ) = b-1;

@@ -41,6 +41,10 @@ void testEncode(){
 	temp = LoadTemplate();
 	neigh = LoadNeighbor();
 	encoded = EncodeRelativeRotation( vertices, faces, temp, neigh );
+
+	for( int i = 0; i < encoded.cols(); ++i ){
+		fout << encoded( i ) << endl;
+	}
 	
 }
 
