@@ -88,7 +88,7 @@ Q(:,j) = v / norm(v);
 end
 A = Q;
 */
-
+/*
 MatrixXd Ortho( MatrixXd R, int start = 0 ){
 
 	int row = R.rows();
@@ -123,7 +123,7 @@ MatrixXd Ortho( MatrixXd R, int start = 0 ){
 	R = Q;
 	return R;
 }
-
+*/
 	 
 	 
  

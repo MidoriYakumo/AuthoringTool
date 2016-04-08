@@ -9,4 +9,4 @@ function meaning = estsem(obj, means, B, K)
 
 sem = obj' * B;
 meaning = sem(1:size(means, 2)) . / K + means;
-/*
+*/

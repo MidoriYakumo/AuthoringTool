@@ -5,6 +5,10 @@ using std::fstream;
 #include <ios>
 using std::ios;
 
+#include <iostream>
+using std::cout;
+using std::endl;
+
 #include "EncodeModel.h"
 
 void ReadObj(std::string filename, MatrixXd &ret_vertices, MatrixXi &ret_faces )
@@ -15,6 +19,11 @@ void ReadObj(std::string filename, MatrixXd &ret_vertices, MatrixXi &ret_faces )
 	int f1, f2, f3;
 	fstream fin(filename, ios::in);
 	string input;
+
+	if( !fin ){
+		cout << "Cannot read file " + filename << endl;
+		return;
+	}
 
 	while (fin >> input)
 	{

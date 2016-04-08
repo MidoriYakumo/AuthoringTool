@@ -20,6 +20,12 @@ using std::atan2;
 using std::sin;
 using std::cos;
 
+#include <fstream>
+using std::fstream;
+
+#include <ios>
+using std::ios;
+
 void ReadObj( std::string filename, MatrixXd &ret_vertices, MatrixXi &ret_faces );
 void WriteObj( std::string filename, MatrixXd &vertices, MatrixXi &faces );
 
@@ -29,3 +35,6 @@ MatrixXd DecodeRelativeRotation( MatrixXd input, MatrixXi neigh );
 Vector3d ToRotVec(Matrix3d R);
 Matrix3d FromRotVec(Vector3d r);
 MatrixXd Ortho( MatrixXd R, int start );
+
+MatrixXd LoadTemplate();
+MatrixXd LoadNeighbor();

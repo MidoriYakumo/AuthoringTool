@@ -51,7 +51,13 @@
     <ClCompile Include="EncodeRelativeRotation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PCA_SquareMatrix.cpp">
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadTemplate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadNeighbor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,8 +80,19 @@
     <ClInclude Include="Upright.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PCA_SquareMatrix.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="out.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="in.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="neigh.dat">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="reconmean.dat">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

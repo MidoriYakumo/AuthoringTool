@@ -108,6 +108,7 @@ using namespace std;
 * This is the main entry for the PCA program.
 */
 
+/*
 #include "PCA_SquareMatrix.h"
 
 int main()
@@ -129,4 +130,4 @@ int main()
 	// Compute the principal component and show results.
 	cout << PCA::Compute(m) << endl;
 }
-**/
+*/

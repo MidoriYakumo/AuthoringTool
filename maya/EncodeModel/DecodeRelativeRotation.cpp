@@ -37,7 +37,7 @@ MatrixXd DecodeRelativeRotation( MatrixXd input, MatrixXi neigh ){
 	int N( neigh.rows() );
 	Vector3d direction = Vector3d::Zero();
 	int landmarks( 1 );//
-	MatrixXd weight = MatrixXd::Ones( landmarks );//
+	MatrixXd weight( 1, 1 ); weight << 1;
 	MatrixXd features = MatrixXd::Zero( 1, 10 * N );
 	MatrixXd A( 4 * N, 3 * N );
 	int row( 0 );

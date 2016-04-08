@@ -1,4 +1,3 @@
-#include "WriteObj.h"
 
 #include<fstream>
 using std::fstream;

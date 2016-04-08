@@ -18,40 +18,44 @@ MatrixXd EncodeRelativeRotation( MatrixXd model, MatrixXd faces, MatrixXd temp, 
 	for (int i = 0; i < faces.rows(); ++i)
 	{
 		//--handle each face, row vector---
-		Matrix3d V = faces.block< 1, 3 >( i, 0 );
+		Vector3d V = faces.block< 1, 3 >( i, 0 );
 
 		//---origin of current face on template model picked from three vertices---
-		Vector3d Origin = temp.block( V( 0, 0 ), 0, 1, 3 ).transpose();//<1, temp.cols()>(temp(V[0], 0));
+		Vector3d Origin = temp.block< 1, 3 >( V( 0, 0 ), 0 );//<1, temp.cols()>(temp(V[0], 0));
 
 		//---column vector of one edge of current face on template model---
-		Vector3d E1 = temp.block( V( 0, 1 ), 0, 1, 3 ).transpose() - Origin;
+		Vector3d tmp1 = temp.block< 1, 3 >( V( 0, 1 ), 0 );
+		Vector3d E1 = tmp1 - Origin;
 
 		//---column vector of the other edge of current face on template model---
-		Vector3d E2 = temp.block( V( 0, 2 ), 0, 1, 3 ).transpose() - Origin;
+		Vector3d tmp2 = temp.block< 1, 3 >( V( 0, 2 ), 0 );
+		Vector3d E2 = tmp2 - Origin;
 
 		//---normal vector of current face on template model---
 		Vector3d N = E1.cross( E2 ).normalized();
 
 		//---matrix storing first edge, second edge, and normal on template model---
-		Matrix3d Src(3, 3);
+		Matrix3d Src;
 		Src.block< 3, 1 >( 0, 0 ) = E1;
 		Src.block< 3, 1 >( 0, 1 ) = E2;
 		Src.block< 3, 1 >( 0, 2 ) = N;
 
 		//---origin coordinates of current face on input model---
-		MatrixXd T0 = model.block< 1, 3 >( V( 0, 0 ), 0 ).transpose(); 
+		Vector3d T0 = model.block< 1, 3 >( V( 0, 0 ), 0 ); 
 
 		//---column vector of one edge of current face on input model---
-		MatrixXd T1 = model.block< 1, 3 >( V( 0, 1 ), 0 ).transpose() - T0;
+		Vector3d tmp3 = model.block< 1, 3 >( V( 0, 1 ), 0 );
+		Vector3d T1 = tmp3 - T0;
 
 		//---column vector of the other edge of current face on input model---
-		MatrixXd T2 = model.block< 1, 3 >( V( 0, 2 ), 0 ).transpose() - T0;
+		Vector3d tmp4 = model.block< 1, 3 >( V( 0, 2 ), 0 );
+		Vector3d T2 = tmp4 - T0;
 
 		//---normal vector of current face on input model---
 		Vector3d Tn = T1.cross( T2 ).normalized();
 
 		//---matrix storing first edge, second edge, and normal on input model---
-		Matrix3d Tgt(3, 3);
+		Matrix3d Tgt;
 		Tgt.block< 3, 1 >( 0, 0 ) = T1;
 		Tgt.block< 3, 1 >( 0, 1 ) = T2;
 		Tgt.block< 3, 1 >( 0, 2 ) = Tn;
