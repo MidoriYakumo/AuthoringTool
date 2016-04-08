@@ -37,11 +37,11 @@ void ReadObj(std::string filename, MatrixXd &ret_vertices, MatrixXi &ret_faces )
 		}
 		if (input == "f" || input == "F")
 		{
-			fin >> f1 >> f2 >> f3;
+			fin >> f1 >> input >> f2 >> input >> f3 >> input;
 			faces.push_back(vector<int>());
-			faces.back().push_back(f1);
-			faces.back().push_back(f2);
-			faces.back().push_back(f3);
+			faces.back().push_back(f1-1);
+			faces.back().push_back(f2-1);
+			faces.back().push_back(f3-1);
 		}
 	}
 

@@ -9,9 +9,9 @@ MatrixXi LoadNeighbor(){
 
 	for( int i = 0; i < 6449; ++i ){
 		fin >> a >> b >> c;
-		result( i, 0 ) = a;
-		result( i, 1 ) = b;
-		result( i, 2 ) = c;
+		result( i, 0 ) = a-1;
+		result( i, 1 ) = b-1;
+		result( i, 2 ) = c-1;
 	}
 	
 	return result;

@@ -34,13 +34,14 @@ void testEncode(){
 	MatrixXd vertices;
 	MatrixXi faces;
 	MatrixXd temp;
-	MatrixXd neigh;
+	MatrixXi neigh;
+	MatrixXd encoded;
 
-	ReadObj( "test.obj", vertices, faces );
+	ReadObj( "../s1p0.obj", vertices, faces );
 	temp = LoadTemplate();
 	neigh = LoadNeighbor();
-
-
+	encoded = EncodeRelativeRotation( vertices, faces, temp, neigh );
+	
 }
 
 int main(){
