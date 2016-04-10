@@ -1,4 +1,4 @@
-
+﻿
 #include "BodyReshaper.h"
 #include "../AutomaticRigging/pinocchioApi.h"
 
@@ -24,7 +24,7 @@ MSyntax BodyReshaper::newSyntax(){
 
 	MSyntax syntax;
 
-	syntax.addFlag( fileFlag, fileLongFlag, MSyntax::kString );
+	syntax.addFlag( fileFlag, fileLongFlag, MSyntax::kString );  //文件名
 	//syntax.addFlag( degreeFlag, degreeLongFlag, MSyntax::kDouble );
 	//syntax.addFlag( grammarFlag, grammarLongFlag, MSyntax::kString );
 	//syntax.addFlag( iterationFlag, iterationLongFlag, MSyntax::kUnsigned );
@@ -34,14 +34,14 @@ MSyntax BodyReshaper::newSyntax(){
 
 MStatus BodyReshaper::doIt( const MArgList& args ){
 
-	MArgDatabase argData( syntax(), args );
+	MArgDatabase argData( syntax(), args ); //get the database of the arguments 调用一个command
 	MString filename;
 	//double degree = 25.7;
 	//MString grammar = "F\nF->F[+F]F[-F]F";
 	//unsigned iteration = 1;
 
-	if( argData.isFlagSet( fileFlag ) )
-		argData.getFlagArgument( fileFlag, 0, filename );
+	if( argData.isFlagSet( fileFlag ) ) //数据库有没有提供这个参数 -f，有-f就取出-f后面跟着的值
+		argData.getFlagArgument( fileFlag, 0, filename ); // -f , filename 
 	//if( argData.isFlagSet( degreeFlag) )
 	//	argData.getFlagArgument( degreeFlag, 0, degree );
 	//if( argData.isFlagSet( grammarFlag ) )
@@ -98,29 +98,29 @@ MStatus BodyReshaper::doIt( const MArgList& args ){
 
 	MGlobal::executeCommand( parentJointCmd );
 
-	for( int i = 0; i < ( int )mesh.vertices.size(); ++i ){
+	for( int i = 0; i < ( int )mesh.vertices.size(); ++i ){ //6000多个顶点
 
-		Vector< double, -1 > v = output.attachment->getWeights(i);
-		vector< double > weights( v.size() + 1, 0 );
-		vector< int > parent{ 0, 0, 1, 0, 2, 4, 5, 6, 2, 8, 9, 10, 0, 12, 13, 0, 15, 16 };
+		Vector< double, -1 > v = output.attachment->getWeights(i);   //第i个顶点对应每个Joint的权重
+		vector< double > weights( v.size() + 1, 0 );    //只有17个骨头，18个Joints。
+		vector< int > parent{ 0, 0, 1, 0, 2, 4, 5, 6, 2, 8, 9, 10, 0, 12, 13, 0, 15, 16 };  // 0-17的对应的Parent
 		MString jointWeightCmd;
 
-		jointWeightCmd = jointWeightCmd
+		jointWeightCmd = jointWeightCmd  
 			+ "select -r body:Mesh.vtx["
 			+ i
 			+ "]; skinPercent -normalize false -zeroRemainingInfluences true ";
 
-		for( int j = 0; j < v.size(); ++j ) {
+		for( int j = 0; j < v.size(); ++j ) {  //17个骨头
 
 			double d = floor( 0.5 + v[j] * 10000. ) / 10000.;
 
-			weights[ j + 1 ] += d * .5;
+			weights[ j + 1 ] += d * .5;   //分成两个Joint 
 			weights[ parent[ j + 1 ] ] += d * .5;
 		}
 
 		for( int j = 0; j < weights.size(); ++j ){
 			jointWeightCmd = jointWeightCmd + "-transformValue joint" + j + " " + weights[ j ] + " ";
-		}
+		} //18个Joint的weight给顶点。 一个顶点每个joint对它造成的影响。
 
 		jointWeightCmd = jointWeightCmd + "skinCluster1;";
 		MGlobal::executeCommand( jointWeightCmd );

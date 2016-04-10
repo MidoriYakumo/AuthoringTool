@@ -1,4 +1,4 @@
-#include <maya/MPxCommand.h>
+﻿#include <maya/MPxCommand.h>
 #include <maya/MFnPlugin.h>
 #include <maya/MIOStream.h>
 #include <maya/MString.h>
@@ -6,7 +6,7 @@
 
 #include "BodyReshaper.h"
 
-MStatus initializePlugin( MObject obj )
+MStatus initializePlugin( MObject obj ) //打钩
 {
     MStatus   status = MStatus::kSuccess;
     MFnPlugin plugin( obj, "Figure Reshaper", "1.0", "1.0" );
@@ -21,14 +21,14 @@ MStatus initializePlugin( MObject obj )
 		"menu -label \"Figure Reshaper\" myFigureReshaperMenu; \n"
 		"setParent -menu myFigureReshaperMenu; \n"
 		"menuItem -label \"Figure Reshaper\" -command \"source \\\""
-		+ plugin.loadPath() + "/MyPluginDialog\\\"\"; \n";
+		+ plugin.loadPath() + "/MyPluginDialog\\\"\"; \n";  //menu插进主界面？
 
 	MGlobal::executeCommand( cmd, true );
 
     return status;
 }
 
-MStatus uninitializePlugin( MObject obj )
+MStatus uninitializePlugin( MObject obj ) //不打钩
 {
     MStatus   status = MStatus::kSuccess;
     MFnPlugin plugin( obj );

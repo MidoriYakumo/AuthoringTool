@@ -1,28 +1,28 @@
 if( `window -exists myWindow` ) deleteUI myWindow;
 window -title "Figure Reshaper" myWindow;
     columnLayout;
-    
+
         rowLayout -numberOfColumns 2
                   -columnWidth2 340 340
                   -columnAlign2 "left" "right";
             text -label "Step 1: Load Image" -font "boldLabelFont";
             button -label "Browse" -command "myLoadImage()";
         setParent ..;
-    
+
         rowLayout -numberOfColumns 2
                   -columnWidth2 340 340
                   -columnAlign2 "left" "right";
             text -label "Step 2: Load Template Model" -font "boldLabelFont";
             button -label "Browse" -command "myLoadTemplateModel()";
         setParent ..;
-    
+
         rowLayout -numberOfColumns 2
                   -columnWidth2 340 340
                   -columnAlign2 "left" "right";
             text -label "Step 3: Automatic Rigging" -font "boldLabelFont";
             button -label "Rig" -command "myAutomaticRigging()";
         setParent ..;
-    
+
         frameLayout -label "Step 4: Shape Fitting"
                     -collapsable true;
             columnLayout -rowSpacing 5;
@@ -31,20 +31,20 @@ window -title "Figure Reshaper" myWindow;
                 floatSliderGrp -field true -min 0 -max 1 -value 0.5 -label "Girth" "myGirth";
             setParent ..;
         setParent ..;
-        
-        rowLayout -numberOfColumns 2 
+
+        rowLayout -numberOfColumns 2
                   -columnWidth2 340 340
                   -columnAlign2 "left" "right";
             button -label "Update" -command "myUpdate()";
             button -label "Cancel" -command "myCancel()";
         setParent ..;
-        
+
 showWindow myWindow;
 
 global proc myLoadImage(){
-    
+
     string $file = `fileDialog`;
-    
+
     //---load image---
 	imagePlane;
 	setAttr imagePlane1.imageName -type "string" $file;
@@ -57,36 +57,36 @@ global proc myLoadImage(){
 global string $gMyBodyModel;
 
 global proc myLoadTemplateModel(){
-    
+
     global string $gMyBodyModel;
-	
+
     //---load template model---
-	$gMyBodyModel = `fileDialog`;
-    file -import 
-        -type "OBJ" 
-        -ignoreVersion 
-        -ra true 
-        -mergeNamespacesOnClash false 
-        -namespace "body" 
-        -options "mo=1"  
-        -pr $gMyBodyModel;
+	$gMyBodyModel = `fileDialog`; //存model的路径
+    file -import
+        -type "OBJ"
+        -ignoreVersion
+        -ra true
+        -mergeNamespacesOnClash false
+        -namespace "body"
+        -options "mo=1"
+        -pr $gMyBodyModel;    //file所对应的obj信息存进来
     //setAttr "body:Mesh.rotateX" -90;
 }
 
 global proc myAutomaticRigging(){
-    
+
 	global string $gMyBodyModel;
-	
+
     //---automatic rigging---
-	FigureReshaper -f $gMyBodyModel;
+	FigureReshaper -f $gMyBodyModel; //FigureReshaper -file $gMyBodyModel
 }
 
 global proc myUpdate(){
-    
+
     float $i = `floatSliderGrp -query -value "myWeight"`;
     float $s = `floatSliderGrp -query -value "myHeight"`;
     float $d = `floatSliderGrp -query -value "myGirth"`;
-    
+
     //---update---
 }
 
