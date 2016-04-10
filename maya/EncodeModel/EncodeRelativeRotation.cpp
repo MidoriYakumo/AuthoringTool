@@ -87,9 +87,7 @@ MatrixXd EncodeRelativeRotation( MatrixXd &model, MatrixXi &faces, MatrixXd &tem
 
 	for (int i = 0; i < faces.rows(); i++)
 	{
-		Matrix3d tmp1 = Rs[i].inverse();
-		Matrix3d tmp2 = Rs[neigh(i, 0)];
-		Matrix3d delta = tmp1 * tmp2;
+		Matrix3d delta = Rs[i].inverse() * Rs[neigh(i, 0)];
 		result.block< 1, 3 >( 0, i * step ) = ToRotVec( delta );
 		delta = Rs[i].inverse() * Rs[neigh(i, 1)];
 		result.block< 1, 3 >( 0, i * step + 3 ) = ToRotVec( delta );

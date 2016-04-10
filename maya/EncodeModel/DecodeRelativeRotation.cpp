@@ -24,22 +24,25 @@
 
 #include "EncodeModel.h"
 
+#include <Eigen/Sparse>
+using Eigen::SparseMatrix;
+
 //---input: row vector of input model in RR represention---
 //---neigh: indices of neighboring faces---
 //---return: row vector of input model in translation invariant encoding---
-MatrixXd DecodeRelativeRotation( MatrixXd input, MatrixXi neigh ){
+MatrixXd DecodeRelativeRotation( MatrixXd &input, MatrixXi &neigh ){
 
-	if( input.cols() == 1 ){
-		input.transposeInPlace();
-	}
+	//if( input.cols() == 1 ){
+	//	input.transposeInPlace();
+	//}
 
 	int step( 15 );
 	int N( neigh.rows() );
 	Vector3d direction = Vector3d::Zero();
-	int landmarks( 1 );//
-	MatrixXd weight( 1, 1 ); weight << 1;
+	//int landmarks( 1 );
+	//MatrixXd weight( 1, 1 ); weight << 1;
 	MatrixXd features = MatrixXd::Zero( 1, 10 * N );
-	MatrixXd A( 4 * N, 3 * N );
+	SparseMatrix< double > A( ( int )( 4.5 * N ), 3 * N );
 	int row( 0 );
 
 	for( int i = 0; i < N; ++i ){
@@ -49,9 +52,11 @@ MatrixXd DecodeRelativeRotation( MatrixXd input, MatrixXi neigh ){
 		if( n > i ){
 
 			Matrix3d delta = FromRotVec( input.block< 1, 3 >( 0, i * step ) );
+			Matrix3d tmp1 = Matrix3d::Identity() * -1.;
+			Matrix3d tmp2 = delta.transpose();
 
-			A.block< 3, 3 >( row, n * 3 ) = Matrix3d::Ones() * -1.0;
-			A.block< 3, 3 >( row, i * 3 ) = delta.transpose();
+			MySM3Block( A, row, n * 3, tmp1 );
+			MySM3Block( A, row, i * 3, tmp2 );
 			row += 3;
 		}
 
@@ -60,9 +65,11 @@ MatrixXd DecodeRelativeRotation( MatrixXd input, MatrixXi neigh ){
 		if( n > i ){
 
 			Matrix3d delta = FromRotVec( input.block< 1, 3 >( 0, i * step + 3 ) );
+			Matrix3d tmp1 = Matrix3d::Identity() * -1.;
+			Matrix3d tmp2 = delta.transpose();
 
-			A.block< 3, 3 >( row, n * 3 ) = Matrix3d::Ones() * -1.0;
-			A.block< 3, 3 >( row, i * 3 ) = delta.transpose();
+			MySM3Block( A, row, n * 3, tmp1 );
+			MySM3Block( A, row, i * 3, tmp2 );
 			row += 3;
 		}
 
@@ -71,9 +78,11 @@ MatrixXd DecodeRelativeRotation( MatrixXd input, MatrixXi neigh ){
 		if( n > i ){
 
 			Matrix3d delta = FromRotVec( input.block< 1, 3 >( 0, i * step + 6 ) );
+			Matrix3d tmp1 = Matrix3d::Identity() * -1.;
+			Matrix3d tmp2 = delta.transpose();
 
-			A.block< 3, 3 >( row, n * 3 ) = Matrix3d::Ones() * -1.0;
-			A.block< 3, 3 >( row, i * 3 ) = delta.transpose();
+			MySM3Block( A, row, n * 3, tmp1 );
+			MySM3Block( A, row, i * 3, tmp2 );
 			row += 3;
 		}
 
@@ -81,13 +90,20 @@ MatrixXd DecodeRelativeRotation( MatrixXd input, MatrixXi neigh ){
 	}
 
 	MatrixXd rhs = MatrixXd::Zero( A.rows(), 3 );
+	Matrix3d eye = Matrix3d::Identity();
 
-	A.block< 3, 3 >( row, 0 ) = Matrix3d::Identity();
+	MySM3Block( A, row, 0, eye );
 	rhs.block< 3, 3 >( row, 0 ) = FromRotVec( direction ).transpose();
 	row += 3;
 
-	MatrixXd At = A.transpose();
-	MatrixXd Rs = ( At * A ).inverse() * ( At * rhs );
+	SparseMatrix< double > At( A.transpose() );
+	auto AtA( At * A );
+	SparseLU< SparseMatrix< double > > solver;
+	MatrixXd Rs;
+
+	solver.analyzePattern( AtA );
+	solver.factorize( AtA );
+	Rs = solver.solve( At * rhs );
 
 	for( int i = 0; i < N; ++i ){
 		
