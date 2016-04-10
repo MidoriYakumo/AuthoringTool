@@ -56,7 +56,7 @@ Matrix3d FromRotVec( Vector3d r )
 		double theta = r.norm();
 
 		r = -r / theta;
-		R << 0, -r( 3 ), r( 2 ), r( 3 ), 0, -r( 1 ), -r( 2 ), r( 1 ), 0;
+		R << 0, -r( 2 ), r( 1 ), r( 2 ), 0, -r( 0 ), -r( 1 ), r( 0 ), 0;
 		R = R * sin( theta ) + ( R * R ) * ( 1 - cos( theta ) ) + Matrix3d::Identity();
 	}
 
@@ -125,5 +125,16 @@ MatrixXd Ortho( MatrixXd R, int start = 0 ){
 }
 */
 	 
-	 
- 
+void MySM3Block( SparseMatrix< double > &sm, int row, int col, Matrix3d &dm3 ){
+
+	vector< Triplet< double > > vtd;
+
+	for( int i = 0; i < 3; ++i ){
+		for( int j = 0; j < 3; ++j ){
+			if( abs( dm3( i, j ) ) < 1e-6 ) continue;
+			vtd.push_back( Triplet< double >( row + i, col + j, dm3( i, j ) ) );
+		}
+	}
+
+	sm.setFromTriplets( vtd.begin(), vtd.end() );
+}

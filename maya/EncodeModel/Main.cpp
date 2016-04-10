@@ -1,16 +1,6 @@
 
 #include "EncodeModel.h"
 
-#include <iostream>
-using std::cout;
-using std::endl;
-
-#include <fstream>
-using std::fstream;
-
-#include <ios>
-using std::ios;
-
 void saveData(){
 
 	fstream fin( "in.txt", ios::in );
@@ -48,9 +38,32 @@ void testEncode(){
 	
 }
 
+void testDecode(){
+
+	fstream fin( "in.txt", ios::in );
+	fstream fout( "out.txt", ios::out );
+	MatrixXd encoded( 1, 193410 );
+	MatrixXi neigh;
+	MatrixXd features;
+	double a;
+	
+	for( int i = 0; i < 193410; ++i ){
+		fin >> a;
+		encoded( i ) = a;
+	}
+
+	neigh = LoadNeighbor();
+	features = DecodeRelativeRotation( encoded, neigh );
+
+	for( int i = 0; i < features.cols(); ++i ){
+		fout << features( i ) << endl;
+	}
+
+}
+
 int main(){
 
-	testEncode();
+	testDecode();
 
 	return 0;
 }
