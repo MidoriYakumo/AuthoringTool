@@ -14,6 +14,9 @@ MStatus initializePlugin( MObject obj ) //打钩
     //---register command---
     status = plugin.registerCommand( "FigureReshaper", BodyReshaper::creator, BodyReshaper::newSyntax );
 	if (!status){ status.perror( "registerCommand" ); return status; }
+
+	status = plugin.registerCommand( "MorphShape", MorphShape::creator, MorphShape::newSyntax );
+	if (!status){ status.perror( "registerCommand" ); return status; }
 	
 	//---create menu---
 	MString cmd = "global string $gMainWindow; \n"
@@ -24,7 +27,11 @@ MStatus initializePlugin( MObject obj ) //打钩
 		+ plugin.loadPath() + "/MyPluginDialog\\\"\"; \n";  //menu插进主界面？
 
 	MGlobal::executeCommand( cmd, true );
-
+	
+	//---initialize encode---
+	MorphShape::em.LoadAvg();
+	MorphShape::em.LoadC();
+	
     return status;
 }
 
@@ -35,6 +42,9 @@ MStatus uninitializePlugin( MObject obj ) //不打钩
 
 	//---deregister command---
     status = plugin.deregisterCommand( "FigureReshaper" );
+	if (!status){ status.perror( "deregisterCommand" ); return status; }
+
+	status = plugin.deregisterCommand( "MorphShape" );
 	if (!status){ status.perror( "deregisterCommand" ); return status; }
 
 	//---delete menu---

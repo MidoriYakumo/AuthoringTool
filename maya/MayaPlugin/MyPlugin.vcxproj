@@ -408,6 +408,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BodyReshaper.cpp" />
+    <ClCompile Include="MorphShape.cpp" />
     <ClCompile Include="PluginMain.cpp" />
   </ItemGroup>
   <ItemGroup>

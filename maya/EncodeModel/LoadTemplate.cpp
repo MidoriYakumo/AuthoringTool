@@ -4,7 +4,7 @@
 MatrixXd LoadTemplate(){
 	
 	MatrixXd result( 6449, 3 );
-	fstream fin( "reconmean.dat", ios::in );
+	fstream fin( "./data/reconmean.dat", ios::in );
 	double a, b, c;
 	
 	for( int i = 0; i < 6449; ++i ){

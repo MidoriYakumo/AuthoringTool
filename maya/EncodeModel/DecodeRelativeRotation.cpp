@@ -42,7 +42,7 @@ MatrixXd DecodeRelativeRotation( MatrixXd &input, MatrixXi &neigh ){
 	//int landmarks( 1 );
 	//MatrixXd weight( 1, 1 ); weight << 1;
 	MatrixXd features = MatrixXd::Zero( 1, 10 * N );
-	SparseMatrix< double > A( ( int )( 4.5 * N ), 3 * N );
+	SparseMatrix< double > A( ( N * 9 >> 1 ) + 3, 3 * N );
 	int row( 0 );
 
 	for( int i = 0; i < N; ++i ){
@@ -96,18 +96,20 @@ MatrixXd DecodeRelativeRotation( MatrixXd &input, MatrixXi &neigh ){
 	rhs.block< 3, 3 >( row, 0 ) = FromRotVec( direction ).transpose();
 	row += 3;
 
+	cout << "Solving." << endl;
 	SparseMatrix< double > At( A.transpose() );
 	auto AtA( At * A );
-	SparseLU< SparseMatrix< double > > solver;
+	SimplicialLDLT< SparseMatrix< double > > solver;
 	MatrixXd Rs;
 
-	solver.analyzePattern( AtA );
-	solver.factorize( AtA );
+	solver.compute( AtA );
 	Rs = solver.solve( At * rhs );
 
+
 	for( int i = 0; i < N; ++i ){
-		
-		Eigen::JacobiSVD< MatrixXd > svd( Rs, Eigen::ComputeThinU | Eigen::ComputeThinV );
+
+		MatrixXd tmp = Rs.block< 3, 3 >( i * 3, 0 );
+		JacobiSVD< MatrixXd > svd( tmp, Eigen::ComputeThinU | Eigen::ComputeThinV );
 		MatrixXd U = svd.matrixU();
 		MatrixXd V = svd.matrixV();
 		MatrixXd x = U * V.transpose();

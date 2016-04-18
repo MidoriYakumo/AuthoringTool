@@ -61,9 +61,56 @@ void testDecode(){
 
 }
 
+void testDecodeTrans(){
+
+	fstream fin( "./data/decodedrot.dat", ios::in );
+	fstream fout( "out.txt", ios::out );
+	MatrixXd features( 1, 128940 );
+	MatrixXd modelout;
+	double d;
+
+	for( int i = 0; i < 128940; ++i ){
+		fin >> d;
+		features( i ) = d;
+	}
+
+	EncodeModel em;
+
+	em.LoadFaces();
+	em.LoadReconmean();
+	modelout = DecodeTranslation( features, em.faces, em.reconmean );
+
+	fout << modelout;
+}
+
+void testMorph(){
+
+	//---encode---
+	fstream fout( "out.txt", ios::out );
+	MatrixXd vertices;
+	MatrixXi faces;
+	MatrixXd temp;
+	MatrixXi neigh;
+	MatrixXd encoded;
+
+	ReadObj( "../s1p0.obj", vertices, faces );
+	temp = LoadTemplate();
+	neigh = LoadNeighbor();
+	encoded = EncodeRelativeRotation( vertices, faces, temp, neigh );
+
+	//---morph---
+	EncodeModel em;
+	MatrixXd projected;
+
+	em.LoadAvg();
+	em.LoadC();
+	projected = em.C * ( encoded.transpose() - em.avg );
+
+}
+
 int main(){
 
-	testDecode();
+	testDecodeTrans();
 
 	return 0;
 }

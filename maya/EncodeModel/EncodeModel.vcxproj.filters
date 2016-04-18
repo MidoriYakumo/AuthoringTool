@@ -60,6 +60,18 @@
     <ClCompile Include="LoadNeighbor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LoadC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MorphTo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EncodeModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DecodeTranslation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LearnOptimalEstimator.h">
@@ -88,11 +100,31 @@
     <Text Include="in.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="neigh.dat">
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\avg.dat">
       <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="reconmean.dat">
+    </None>
+    <None Include="data\C.dat">
       <Filter>Resource Files</Filter>
-    </Text>
+    </None>
+    <None Include="data\neigh.dat">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\projected.dat">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\reconmean.dat">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\decodedrot.dat">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\encoded.dat">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\faces.dat">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

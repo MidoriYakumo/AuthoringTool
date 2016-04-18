@@ -147,16 +147,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DecodeRelativeRotation.cpp" />
+    <ClCompile Include="DecodeTranslation.cpp" />
     <ClCompile Include="DoPCA.cpp" />
+    <ClCompile Include="EncodeModel.cpp" />
     <ClCompile Include="EncodeRelativeRotation.cpp" />
     <ClCompile Include="estsem.cpp" />
     <ClCompile Include="GenerateSemBasis.cpp" />
     <ClCompile Include="GenerateShapeModel.cpp" />
     <ClCompile Include="LearnOptimalEstimator.cpp" />
+    <ClCompile Include="LoadC.cpp" />
     <ClCompile Include="LoadNeighbor.cpp" />
     <ClCompile Include="LoadTemplate.cpp" />
     <ClCompile Include="MainFunctionHere.cpp" />
     <ClCompile Include="MatrixManipulation.cpp" />
+    <ClCompile Include="MorphTo.cpp" />
     <ClCompile Include="ReadObj.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Upright.cpp" />
@@ -172,9 +176,17 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="in.txt" />
-    <Text Include="neigh.dat" />
     <Text Include="out.txt" />
-    <Text Include="reconmean.dat" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\avg.dat" />
+    <None Include="data\C.dat" />
+    <None Include="data\decodedrot.dat" />
+    <None Include="data\encoded.dat" />
+    <None Include="data\faces.dat" />
+    <None Include="data\neigh.dat" />
+    <None Include="data\projected.dat" />
+    <None Include="data\reconmean.dat" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

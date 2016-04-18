@@ -20,6 +20,11 @@ const char *fileFlag = "-f", *fileLongFlag = "-file";
 //const char *grammarFlag = "-g", *grammarLongFlag = "-grammar";
 //const char *iterationFlag = "-i", *iterationLongFlag = "-iteration";
 
+void* BodyReshaper::creator(){ 
+	
+	return new BodyReshaper(); 
+}
+
 MSyntax BodyReshaper::newSyntax(){
 
 	MSyntax syntax;
@@ -125,6 +130,6 @@ MStatus BodyReshaper::doIt( const MArgList& args ){
 		jointWeightCmd = jointWeightCmd + "skinCluster1;";
 		MGlobal::executeCommand( jointWeightCmd );
 	}
-
+	
 	return MStatus::kSuccess;
 }

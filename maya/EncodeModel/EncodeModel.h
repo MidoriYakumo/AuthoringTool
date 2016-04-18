@@ -11,6 +11,7 @@ using Eigen::SparseMatrix;
 using Eigen::Triplet;
 using Eigen::SparseSparseProduct;
 using Eigen::SparseLU;
+using Eigen::SimplicialLDLT;
 
 #include <Eigen/Dense>
 using Eigen::Vector3d;
@@ -41,6 +42,7 @@ void WriteObj( std::string filename, MatrixXd &vertices, MatrixXi &faces );
 
 MatrixXd EncodeRelativeRotation( MatrixXd &model, MatrixXi &faces, MatrixXd &temp, MatrixXi &neigh);
 MatrixXd DecodeRelativeRotation( MatrixXd &input, MatrixXi &neigh );
+MatrixXd DecodeTranslation( MatrixXd &features, MatrixXi &faces, MatrixXd &temp );
 
 Vector3d ToRotVec(Matrix3d R);
 Matrix3d FromRotVec(Vector3d r);
@@ -48,5 +50,22 @@ MatrixXd Ortho( MatrixXd R, int start );
 
 MatrixXd LoadTemplate();
 MatrixXi LoadNeighbor();
+MatrixXd LoadC();
 
 void MySM3Block( SparseMatrix< double > &sm, int row, int col, Matrix3d &dm3 );
+
+class EncodeModel{
+public:
+	
+	void LoadFaces();
+	void LoadReconmean();
+	void LoadC();
+	void LoadCoeffs();
+	void LoadAvg();
+
+	MatrixXi faces;
+	MatrixXd reconmean;
+	MatrixXd C;
+	MatrixXd coeffs;
+	MatrixXd avg;
+};
