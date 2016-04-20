@@ -80,9 +80,6 @@
     <ClInclude Include="GenerateShapeModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GenerateSemBasis.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EncodeModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>

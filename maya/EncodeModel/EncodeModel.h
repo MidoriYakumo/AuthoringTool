@@ -47,12 +47,17 @@ MatrixXd DecodeTranslation( MatrixXd &features, MatrixXi &faces, MatrixXd &temp 
 Vector3d ToRotVec(Matrix3d R);
 Matrix3d FromRotVec(Vector3d r);
 MatrixXd Ortho( MatrixXd R, int start );
-
+MatrixXd Estsem(MatrixXd &obj, MatrixXd &means, MatrixXd &B, MatrixXd &K);
 MatrixXd LoadTemplate();
 MatrixXi LoadNeighbor();
 MatrixXd LoadC();
 
+
+
 void MySM3Block( SparseMatrix< double > &sm, int row, int col, Matrix3d &dm3 );
+// GenSemBasis( MatrixXd subjects, MatrixXd semvals);
+MatrixXd PInv(MatrixXd &PInvmat);
+MatrixXd MorphTo(MatrixXd start, MatrixXd target, MatrixXd subjects, MatrixXd semvals);
 
 class EncodeModel{
 public:

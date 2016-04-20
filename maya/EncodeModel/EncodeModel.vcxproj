@@ -169,7 +169,6 @@
   <ItemGroup>
     <ClInclude Include="DoPCA.h" />
     <ClInclude Include="EncodeModel.h" />
-    <ClInclude Include="GenerateSemBasis.h" />
     <ClInclude Include="GenerateShapeModel.h" />
     <ClInclude Include="LearnOptimalEstimator.h" />
     <ClInclude Include="Upright.h" />
