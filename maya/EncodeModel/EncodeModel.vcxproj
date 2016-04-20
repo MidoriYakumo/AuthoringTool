@@ -184,6 +184,7 @@
     <None Include="data\decodedrot.dat" />
     <None Include="data\encoded.dat" />
     <None Include="data\faces.dat" />
+    <None Include="data\modelout.dat" />
     <None Include="data\neigh.dat" />
     <None Include="data\projected.dat" />
     <None Include="data\reconmean.dat" />

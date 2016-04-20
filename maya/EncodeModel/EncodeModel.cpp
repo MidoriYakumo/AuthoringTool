@@ -15,6 +15,20 @@ void EncodeModel::LoadFaces(){
 	}
 }
 
+void EncodeModel::LoadNeigh(){
+
+	fstream fin( "./data/neigh.dat", ios::in );
+	int a;
+
+	neigh = MatrixXi( 12894, 3 );
+	for( int i = 0; i < 12894; ++i ){
+		for( int j = 0; j < 3; ++j ){
+			fin >> a;
+			neigh( i, j ) = a - 1;
+		}
+	}
+}
+
 void EncodeModel::LoadReconmean(){
 
 	fstream fin( "./data/reconmean.dat", ios::in );
@@ -45,7 +59,7 @@ void EncodeModel::LoadC(){
 
 void EncodeModel::LoadCoeffs(){
 	
-	fstream fin( "./data/Coeffs.dat", ios::in | ios::binary );
+	fstream fin( "./data/coeffs.dat", ios::in | ios::binary );
 	float f;
 
 	coeffs = MatrixXd( 193410, 1064 );
@@ -59,12 +73,12 @@ void EncodeModel::LoadCoeffs(){
 
 void EncodeModel::LoadAvg(){
 	
-	fstream fin( "./data/avg.dat", ios::in | ios::binary );
+	fstream fin( "./data/avg.dat", ios::in );
 	float f;
 
 	avg = MatrixXd( 193410, 1 );
 	for( int i = 0; i < 193410; ++i ){
 		fin >> f;
-		C( 0, i ) = f;
+		avg( i ) = f;
 	}
 }
