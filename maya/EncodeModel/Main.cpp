@@ -3,18 +3,16 @@
 
 void saveData(){
 
-	fstream fin( "in.txt", ios::in );
-	fstream fout( "out.txt", ios::out );
-	vector< int > v;
-	int a;
+	fstream fin( "./data/coeffs1.dat", ios::in );
+	fstream fout( "./data/coeffs.dat", ios::out | ios::binary );
+	float f;
 
-	for( int i = 0; i < 12894 * 3; ++i ){
-		fin >> a;
-		v.push_back( a );
-	}
-	
-	for( int i = 0; i < 12894; ++i ){
-		fout << v[ i ] << " " << v[ i + 12894 ] << " " << v[ i + 25788 ] << endl;
+	for( int i = 0; i < 1064; ++i ){
+		for( int j = 0; j < 193410; ++j ){
+			fin >> f;
+			fout.write( reinterpret_cast< const char * >( &f ), sizeof( float ) );
+		}
+		cout << i << endl;
 	}
 }
 
@@ -35,12 +33,11 @@ void testEncode(){
 	for( int i = 0; i < encoded.cols(); ++i ){
 		fout << encoded( i ) << endl;
 	}
-	
 }
 
 void testDecode(){
 
-	fstream fin( "in.txt", ios::in );
+	fstream fin( "./data/encoded.dat", ios::in );
 	fstream fout( "out.txt", ios::out );
 	MatrixXd encoded( 1, 193410 );
 	MatrixXi neigh;
@@ -54,11 +51,10 @@ void testDecode(){
 
 	neigh = LoadNeighbor();
 	features = DecodeRelativeRotation( encoded, neigh );
-
+	
 	for( int i = 0; i < features.cols(); ++i ){
 		fout << features( i ) << endl;
 	}
-
 }
 
 void testDecodeTrans(){
@@ -89,28 +85,53 @@ void testMorph(){
 	fstream fout( "out.txt", ios::out );
 	MatrixXd vertices;
 	MatrixXi faces;
-	MatrixXd temp;
-	MatrixXi neigh;
 	MatrixXd encoded;
-
-	ReadObj( "../s1p0.obj", vertices, faces );
-	temp = LoadTemplate();
-	neigh = LoadNeighbor();
-	encoded = EncodeRelativeRotation( vertices, faces, temp, neigh );
-
-	//---morph---
-	EncodeModel em;
+	MatrixXd decodedrot;
+	MatrixXd modelout;
 	MatrixXd projected;
+	MatrixXd unprojected;
+	EncodeModel em;
 
+	em.LoadReconmean();
+	em.LoadNeigh();
 	em.LoadAvg();
+	
+	//---read model---
+	cout << "Reading OBJ..." << endl;
+	ReadObj( "../s1p0.obj", vertices, faces );
+
+	//---encode---
+	cout << "Encoding..." << endl;
+	encoded = EncodeRelativeRotation( vertices, faces, em.reconmean, em.neigh );
+
+	//---project into PCA space---
+	cout << "Projecting..." << endl;
 	em.LoadC();
 	projected = em.C * ( encoded.transpose() - em.avg );
+	em.C.resize( 0, 0 );
 
+	//---unproject from PCA space---
+	cout << "Unprojecting..." << endl;
+	em.LoadCoeffs();
+	unprojected = em.coeffs * projected + em.avg;
+	em.coeffs.resize( 0, 0 );
+
+	//---decode---
+	cout << "Decoding..." << endl;
+	decodedrot = DecodeRelativeRotation( unprojected, em.neigh );
+	modelout = DecodeTranslation( decodedrot, faces, em.reconmean );
+
+	//---write model---
+	cout << "Writing OBJ..." << endl;
+	WriteObj( "../s1p0_out.obj", modelout, faces );
 }
 
 int main(){
-
-	testDecodeTrans();
+	
+	saveData();
+	//testDecode();
+	//testDecodeTrans();
+	//testMorph();
 
 	return 0;
 }

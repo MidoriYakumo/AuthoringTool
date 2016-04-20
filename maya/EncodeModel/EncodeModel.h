@@ -52,23 +52,24 @@ MatrixXd LoadTemplate();
 MatrixXi LoadNeighbor();
 MatrixXd LoadC();
 
-
-
-void MySM3Block( SparseMatrix< double > &sm, int row, int col, Matrix3d &dm3 );
-// GenSemBasis( MatrixXd subjects, MatrixXd semvals);
+void MySM3Block(vector< Triplet< double > > &vtd, int row, int col, Matrix3d &dm3);
+ // GenSemBasis( MatrixXd subjects, MatrixXd semvals);
 MatrixXd PInv(MatrixXd &PInvmat);
 MatrixXd MorphTo(MatrixXd start, MatrixXd target, MatrixXd subjects, MatrixXd semvals);
+ 
 
 class EncodeModel{
 public:
 	
 	void LoadFaces();
+	void LoadNeigh();
 	void LoadReconmean();
 	void LoadC();
 	void LoadCoeffs();
 	void LoadAvg();
 
 	MatrixXi faces;
+	MatrixXi neigh;
 	MatrixXd reconmean;
 	MatrixXd C;
 	MatrixXd coeffs;

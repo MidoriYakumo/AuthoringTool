@@ -1,14 +1,4 @@
 
-#include <fstream>
-using std::fstream;
-
-#include <ios>
-using std::ios;
-
-#include <iostream>
-using std::cout;
-using std::endl;
-
 #include "EncodeModel.h"
 
 void ReadObj(std::string filename, MatrixXd &ret_vertices, MatrixXi &ret_faces )
@@ -37,7 +27,7 @@ void ReadObj(std::string filename, MatrixXd &ret_vertices, MatrixXi &ret_faces )
 		}
 		if (input == "f" || input == "F")
 		{
-			fin >> f1 >> input >> f2 >> input >> f3 >> input;
+			fin >> f1 >> f2 >> f3;
 			faces.push_back(vector<int>());
 			faces.back().push_back(f1-1);
 			faces.back().push_back(f2-1);

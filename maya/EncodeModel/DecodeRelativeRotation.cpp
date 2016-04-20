@@ -32,22 +32,21 @@ using Eigen::SparseMatrix;
 //---return: row vector of input model in translation invariant encoding---
 MatrixXd DecodeRelativeRotation( MatrixXd &input, MatrixXi &neigh ){
 
-	//if( input.cols() == 1 ){
-	//	input.transposeInPlace();
-	//}
+	if( input.cols() == 1 ){
+		input.transposeInPlace();
+	}
 
 	int step( 15 );
 	int N( neigh.rows() );
 	Vector3d direction = Vector3d::Zero();
-	//int landmarks( 1 );
-	//MatrixXd weight( 1, 1 ); weight << 1;
-	MatrixXd features = MatrixXd::Zero( 1, 10 * N );
+	MatrixXd features( 1, 10 * N ); features.setZero();
 	SparseMatrix< double > A( ( N * 9 >> 1 ) + 3, 3 * N );
+	vector< Triplet< double > > vtd;
 	int row( 0 );
 
 	for( int i = 0; i < N; ++i ){
-		
-		int n( neigh( i, 0 ) );
+
+		int n = neigh( i, 0 );
 
 		if( n > i ){
 
@@ -55,8 +54,8 @@ MatrixXd DecodeRelativeRotation( MatrixXd &input, MatrixXi &neigh ){
 			Matrix3d tmp1 = Matrix3d::Identity() * -1.;
 			Matrix3d tmp2 = delta.transpose();
 
-			MySM3Block( A, row, n * 3, tmp1 );
-			MySM3Block( A, row, i * 3, tmp2 );
+			MySM3Block( vtd, row, n * 3, tmp1 );
+			MySM3Block( vtd, row, i * 3, tmp2 );
 			row += 3;
 		}
 
@@ -68,8 +67,8 @@ MatrixXd DecodeRelativeRotation( MatrixXd &input, MatrixXi &neigh ){
 			Matrix3d tmp1 = Matrix3d::Identity() * -1.;
 			Matrix3d tmp2 = delta.transpose();
 
-			MySM3Block( A, row, n * 3, tmp1 );
-			MySM3Block( A, row, i * 3, tmp2 );
+			MySM3Block( vtd, row, n * 3, tmp1 );
+			MySM3Block( vtd, row, i * 3, tmp2 );
 			row += 3;
 		}
 
@@ -81,8 +80,8 @@ MatrixXd DecodeRelativeRotation( MatrixXd &input, MatrixXi &neigh ){
 			Matrix3d tmp1 = Matrix3d::Identity() * -1.;
 			Matrix3d tmp2 = delta.transpose();
 
-			MySM3Block( A, row, n * 3, tmp1 );
-			MySM3Block( A, row, i * 3, tmp2 );
+			MySM3Block( vtd, row, n * 3, tmp1 );
+			MySM3Block( vtd, row, i * 3, tmp2 );
 			row += 3;
 		}
 
@@ -92,27 +91,29 @@ MatrixXd DecodeRelativeRotation( MatrixXd &input, MatrixXi &neigh ){
 	MatrixXd rhs = MatrixXd::Zero( A.rows(), 3 );
 	Matrix3d eye = Matrix3d::Identity();
 
-	MySM3Block( A, row, 0, eye );
+	MySM3Block( vtd, row, 0, eye );
 	rhs.block< 3, 3 >( row, 0 ) = FromRotVec( direction ).transpose();
 	row += 3;
 
-	cout << "Solving." << endl;
+	A.setFromTriplets( vtd.begin(), vtd.end() );
+
 	SparseMatrix< double > At( A.transpose() );
 	auto AtA( At * A );
 	SimplicialLDLT< SparseMatrix< double > > solver;
 	MatrixXd Rs;
 
+	cout << "computing AtA..." << endl;
 	solver.compute( AtA );
+	cout << "solving for At * rhs..." << endl;
 	Rs = solver.solve( At * rhs );
-
-
+	
 	for( int i = 0; i < N; ++i ){
 
-		MatrixXd tmp = Rs.block< 3, 3 >( i * 3, 0 );
-		JacobiSVD< MatrixXd > svd( tmp, Eigen::ComputeThinU | Eigen::ComputeThinV );
-		MatrixXd U = svd.matrixU();
-		MatrixXd V = svd.matrixV();
-		MatrixXd x = U * V.transpose();
+		Matrix3d tmp = Rs.block< 3, 3 >( i * 3, 0 ).transpose();
+		JacobiSVD< Matrix3d > svd( tmp, Eigen::ComputeFullU | Eigen::ComputeFullV );
+		Matrix3d U = svd.matrixU();
+		Matrix3d V = svd.matrixV();
+		Matrix3d x = U * V.transpose();
 
 		features.block< 1, 3 >( 0, i * 10 ) = ToRotVec( x );
 	}

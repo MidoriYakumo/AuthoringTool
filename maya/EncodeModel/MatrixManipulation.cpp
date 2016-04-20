@@ -48,7 +48,7 @@ end
 
 Matrix3d FromRotVec( Vector3d r )
 {
-	Vector3d A = { 1., 1., 1. };
+	Vector3d A = { 0., 0., 0. };
 	Matrix3d R = Matrix3d::Identity();
 
 	if ( r != A ){
@@ -125,9 +125,7 @@ MatrixXd Ortho( MatrixXd R, int start = 0 ){
 }
 */
 	 
-void MySM3Block( SparseMatrix< double > &sm, int row, int col, Matrix3d &dm3 ){
-
-	vector< Triplet< double > > vtd;
+void MySM3Block( vector< Triplet< double > > &vtd, int row, int col, Matrix3d &dm3 ){
 
 	for( int i = 0; i < 3; ++i ){
 		for( int j = 0; j < 3; ++j ){
@@ -135,6 +133,4 @@ void MySM3Block( SparseMatrix< double > &sm, int row, int col, Matrix3d &dm3 ){
 			vtd.push_back( Triplet< double >( row + i, col + j, dm3( i, j ) ) );
 		}
 	}
-
-	sm.setFromTriplets( vtd.begin(), vtd.end() );
 }
