@@ -53,10 +53,12 @@ MatrixXi LoadNeighbor();
 MatrixXd LoadC();
 
 void MySM3Block(vector< Triplet< double > > &vtd, int row, int col, Matrix3d &dm3);
+
  // GenSemBasis( MatrixXd subjects, MatrixXd semvals);
 MatrixXd PInv(MatrixXd &PInvmat);
 MatrixXd MorphTo(MatrixXd start, MatrixXd target, MatrixXd subjects, MatrixXd semvals);
-MatrixXd DoPCA(MatrixXd Models, int N);
+MatrixXd Upright( MatrixXd &in );
+MatrixXd DoPCA( MatrixXd &in );
 
 class EncodeModel{
 public:

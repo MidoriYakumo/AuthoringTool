@@ -4,7 +4,7 @@
 void saveData(){
 
 	fstream fin( "./data/coeffs1.dat", ios::in );
-	fstream fout( "./data/coeffs.dat", ios::out | ios::binary );
+	fstream fout( "./data/coeffs2.dat", ios::out | ios::binary );
 	float f;
 
 	for( int i = 0; i < 1064; ++i ){
@@ -121,6 +121,9 @@ void testMorph(){
 	decodedrot = DecodeRelativeRotation( unprojected, em.neigh );
 	modelout = DecodeTranslation( decodedrot, faces, em.reconmean );
 
+	//---correct model rotation---
+	modelout = Upright( modelout );
+
 	//---write model---
 	cout << "Writing OBJ..." << endl;
 	WriteObj( "../s1p0_out.obj", modelout, faces );
@@ -128,7 +131,7 @@ void testMorph(){
 
 int main(){
 	
-	saveData();
+	testMorph();
 	//testDecode();
 	//testDecodeTrans();
 	//testMorph();

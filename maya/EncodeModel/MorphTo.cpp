@@ -8,8 +8,8 @@ MatrixXd Estsem(MatrixXd obj, MatrixXd means, MatrixXd B, MatrixXd K)
 	return meaning;
 }
 
-MatrixXd MorphTo(MatrixXd start, MatrixXd target, MatrixXd subjects, MatrixXd semvals) {
-
+MatrixXd MorphTo(MatrixXd start, MatrixXd target, MatrixXd subjects, MatrixXd semvals) 
+{
 	subjects = subjects.transpose();
 	MatrixXd means(1, subjects.cols());
 	int sub_sum = 0;
