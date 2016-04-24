@@ -1,6 +1,6 @@
 #include "EncodeModel.h"
 
-MatrixXd Estsem(MatrixXd &obj, MatrixXd &means, MatrixXd &B, MatrixXd &K)
+MatrixXd Estsem(MatrixXd obj, MatrixXd means, MatrixXd B, MatrixXd K)
 {
 	MatrixXd sem = obj.transpose() * B;
 	MatrixXd part_sem = sem.block(0, 0, 1, means.cols());
@@ -56,9 +56,7 @@ MatrixXd MorphTo(MatrixXd start, MatrixXd target, MatrixXd subjects, MatrixXd se
 		TempTarget = target.row(i);
 		Sem.block(0, 0, 1, target.cols()) = TempTarget.cwiseProduct(K);
 		Final.col(i) = (Sem * B.inverse()).transpose();
-
-		Est.row(i) = 
+		Est.row(i) = Estsem(Final.col(i), means, B, K);
 	}
-
-
+	return Final;
 }

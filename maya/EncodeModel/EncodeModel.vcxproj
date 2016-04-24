@@ -167,7 +167,6 @@
     <ClCompile Include="WriteObj.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DoPCA.h" />
     <ClInclude Include="EncodeModel.h" />
     <ClInclude Include="GenerateShapeModel.h" />
     <ClInclude Include="LearnOptimalEstimator.h" />
