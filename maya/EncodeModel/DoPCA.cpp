@@ -23,3 +23,23 @@ eigvals = S.*S;
 projected = coeffs' * models;
 
 */
+
+#include "EncodeModel.h"
+
+MatrixXd DoPCA( MatrixXd &model ){
+
+	int N = model.cols();
+	MatrixXd avg( model.rows(), 1 );
+
+	for( int i = 0; i < avg.rows(); ++i ){
+		avg( i ) = model.row( i ).mean();
+	}
+
+	for( int i = 0; i < avg.cols(); ++i ){
+		model.col( i ) -= avg;
+	}
+
+	JacobiSVD< MatrixXd > svd( model.transpose(), Eigen::ComputeThinU | Eigen::ComputeThinV );
+
+	return svd.matrixV();
+}

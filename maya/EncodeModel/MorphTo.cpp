@@ -1,5 +1,5 @@
 #include "EncodeModel.h"
-
+/*
 MatrixXd Estsem(MatrixXd &obj, MatrixXd &means, MatrixXd &B, MatrixXd &K)
 {
 	MatrixXd sem = obj.transpose() * B;
@@ -62,3 +62,4 @@ MatrixXd MorphTo(MatrixXd start, MatrixXd target, MatrixXd subjects, MatrixXd se
 
 
 }
+*/
