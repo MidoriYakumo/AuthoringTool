@@ -82,3 +82,31 @@ void EncodeModel::LoadAvg(){
 		avg( i ) = f;
 	}
 }
+
+void EncodeModel::LoadProjected(){
+
+	fstream fin( "./data/projected.dat", ios::in );
+	double d;
+
+	projected = MatrixXd( 1064, 1064 );
+	for( int i = 0; i < 1064; ++i ){
+		for( int j = 0; j < 1064; ++j ){
+			fin >> d;
+			projected( j, i ) = d;
+		}
+	}
+}
+
+void EncodeModel::LoadSemdata(){
+
+	fstream fin( "./data/semdata.dat", ios::in );
+	double d;
+
+	semdata = MatrixXd( 1064, 25 );
+	for( int i = 0; i < 25; ++i ){
+		for( int j = 0; j < 1064; ++j ){
+			fin >> d;
+			semdata( j, i ) = d;
+		}
+	}
+}

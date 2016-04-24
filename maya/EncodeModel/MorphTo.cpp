@@ -12,9 +12,9 @@ MatrixXd MorphTo(MatrixXd start, MatrixXd target, MatrixXd subjects, MatrixXd se
 {
 	subjects = subjects.transpose();
 	MatrixXd means(1, subjects.cols());
-	int sub_sum = 0;
 	for (int i = 0; i < subjects.cols(); ++i)
 	{
+		int sub_sum = 0;
 		for (int j = 0; j < subjects.rows(); ++j)
 		{
 			sub_sum += subjects(j, i);
@@ -27,7 +27,9 @@ MatrixXd MorphTo(MatrixXd start, MatrixXd target, MatrixXd subjects, MatrixXd se
 		//Temp1.block<subjects.rows(), subjects.cols()>( i * subjects.rows() , 0) = subjects;
 		Temp1.block(i * subjects.rows(), 0, subjects.rows(), subjects.cols()) = subjects;
 	}
+
 	semvals = semvals - Temp1;
+
 	MatrixXd X = PInv(subjects) * semvals;
 	MatrixXd B1(subjects.rows(), subjects.cols());
 	B1.block(0, 0, subjects.rows(), 2) = X;

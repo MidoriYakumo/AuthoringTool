@@ -189,6 +189,7 @@
     <None Include="data\neigh.dat" />
     <None Include="data\projected.dat" />
     <None Include="data\reconmean.dat" />
+    <None Include="data\semdata.dat" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

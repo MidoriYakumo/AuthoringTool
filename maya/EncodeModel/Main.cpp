@@ -89,12 +89,17 @@ void testMorph(){
 	MatrixXd decodedrot;
 	MatrixXd modelout;
 	MatrixXd projected;
+	MatrixXd morphed;
 	MatrixXd unprojected;
+	MatrixXd target;
+	MatrixXd semdata;
 	EncodeModel em;
 
 	em.LoadReconmean();
 	em.LoadNeigh();
 	em.LoadAvg();
+	em.LoadProjected();
+	em.LoadSemdata();
 	
 	//---read model---
 	cout << "Reading OBJ..." << endl;
@@ -109,6 +114,15 @@ void testMorph(){
 	em.LoadC();
 	projected = em.C * ( encoded.transpose() - em.avg );
 	em.C.resize( 0, 0 );
+
+	//---morph to---
+	cout << "Morphing..." << endl;
+	target = MatrixXd( 1, 2 );
+	target << 60, 200;
+	semdata = MatrixXd( 1064, 2 );
+	semdata.col( 0 ) = em.semdata.col( 5 );
+	semdata.col( 1 ) = em.semdata.col( 2 );
+	morphed = MorphTo( projected, target, em.projected, semdata );
 
 	//---unproject from PCA space---
 	cout << "Unprojecting..." << endl;
