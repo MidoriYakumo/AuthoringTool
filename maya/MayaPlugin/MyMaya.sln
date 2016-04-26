@@ -12,6 +12,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutomaticRigging", "..\Auto
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EncodeModel", "..\EncodeModel\EncodeModel.vcxproj", "{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "..\Test\Test.vcxproj", "{77E79600-3501-4C6E-808F-0ECA340BB892}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -58,6 +60,18 @@ Global
 		{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}.ReleaseDebug|Win32.Build.0 = Release|Win32
 		{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}.ReleaseDebug|x64.ActiveCfg = Release|x64
 		{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}.ReleaseDebug|x64.Build.0 = Release|x64
+		{77E79600-3501-4C6E-808F-0ECA340BB892}.Debug|Win32.ActiveCfg = Debug|Win32
+		{77E79600-3501-4C6E-808F-0ECA340BB892}.Debug|Win32.Build.0 = Debug|Win32
+		{77E79600-3501-4C6E-808F-0ECA340BB892}.Debug|x64.ActiveCfg = Debug|x64
+		{77E79600-3501-4C6E-808F-0ECA340BB892}.Debug|x64.Build.0 = Debug|x64
+		{77E79600-3501-4C6E-808F-0ECA340BB892}.Release|Win32.ActiveCfg = Release|Win32
+		{77E79600-3501-4C6E-808F-0ECA340BB892}.Release|Win32.Build.0 = Release|Win32
+		{77E79600-3501-4C6E-808F-0ECA340BB892}.Release|x64.ActiveCfg = Release|x64
+		{77E79600-3501-4C6E-808F-0ECA340BB892}.Release|x64.Build.0 = Release|x64
+		{77E79600-3501-4C6E-808F-0ECA340BB892}.ReleaseDebug|Win32.ActiveCfg = Release|Win32
+		{77E79600-3501-4C6E-808F-0ECA340BB892}.ReleaseDebug|Win32.Build.0 = Release|Win32
+		{77E79600-3501-4C6E-808F-0ECA340BB892}.ReleaseDebug|x64.ActiveCfg = Release|x64
+		{77E79600-3501-4C6E-808F-0ECA340BB892}.ReleaseDebug|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

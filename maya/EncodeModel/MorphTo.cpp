@@ -10,6 +10,7 @@ MatrixXd Estsem(MatrixXd obj, MatrixXd means, MatrixXd B, MatrixXd K)
 
 MatrixXd MorphTo(MatrixXd start, MatrixXd target, MatrixXd subjects, MatrixXd semvals) 
 {
+	//---gensembasis---
 	subjects = subjects.transpose();
 	MatrixXd means(1, subjects.cols());
 	for (int i = 0; i < subjects.cols(); ++i)
@@ -32,33 +33,41 @@ MatrixXd MorphTo(MatrixXd start, MatrixXd target, MatrixXd subjects, MatrixXd se
 
 	MatrixXd X = PInv(subjects) * semvals;
 	MatrixXd B1(subjects.rows(), subjects.cols());
-	B1.block(0, 0, subjects.rows(), 2) = X;
-	B1.block(0, 2, subjects.rows(), subjects.cols() - semvals.cols()) = MatrixXd::Identity(subjects.cols(), subjects.cols() - semvals.cols());
+	B1.block(0, 0, subjects.rows(), X.cols()) = X;
+	B1.block(0, X.cols(), subjects.rows(), subjects.cols() - semvals.cols()) = MatrixXd::Identity(subjects.cols(), subjects.cols() - semvals.cols());
 	MatrixXd B = Ortho(B1, 0);
 	MatrixXd D = X.array().square();
 	MatrixXd D1 = D.colwise().sum();
 	MatrixXd K = D1.cwiseSqrt().cwiseInverse();
 	MatrixXd Ssem = subjects * B;
+	//---end gensembasis---
+
 	MatrixXd Temp2(means.rows() * target.rows(), means.cols());
+
 	for (int i = 0; i < target.rows(); i++)
 	{
-		Temp2.block(i * target.rows(), 0, means.rows(), means.cols()) = means;
+		Temp2.block(i * means.rows(), 0, means.rows(), means.cols()) = means;
 	}
 	target = target - Temp2;
-	MatrixXd Final(start.size(), target.rows());
-	Final.setZero();
-	MatrixXd Est(target.rows(), target.cols());
-	Est.setZero();
 
-	MatrixXd Sem; Sem.setZero();
-	MatrixXd TempTarget(1, target.cols()); TempTarget.setZero();
+	MatrixXd Final(start.rows(), target.rows());
+	//MatrixXd Est(target.rows(), target.cols());
+
+	Final.setZero();
+	//Est.setZero();
+
+	MatrixXd Sem;
+	MatrixXd TempTarget;
+	MatrixXd BInv = B.inverse();
+
 	for (int i = 0; i < target.rows(); ++i)
 	{
 		Sem = start.transpose() * B;
 		TempTarget = target.row(i);
 		Sem.block(0, 0, 1, target.cols()) = TempTarget.cwiseProduct(K);
-		Final.col(i) = (Sem * B.inverse()).transpose();
-		Est.row(i) = Estsem(Final.col(i), means, B, K);
+		Final.col(i) = (Sem * BInv).transpose();
+		//Est.row(i) = Estsem(Final.col(i), means, B, K);
 	}
+
 	return Final;
 }

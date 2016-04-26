@@ -3,38 +3,51 @@
 using Eigen::JacobiSVD;
 
 //orthogonalize matrix A starting from column start
-MatrixXd Ortho(MatrixXd R, int start = 0) {
+MatrixXd Ortho(MatrixXd R, int start) {
+
 	int row = R.rows();
 	int column = R.cols();
 	MatrixXd Q(row, column);
+
 	Q.setZero();
-	for (int i = 0; i < row; ++i)
-		for (int j = 0; j < start - 1; ++j)
+
+	for (int j = 0; j < start - 1; ++j)
+	{
+		for (int i = 0; i < row; ++i)
 		{
 			Q(i, j) = R(i, j);
 		}
+	}
 
-	MatrixXd V(row, column - start + 1);
-	V.setZero();
+	//MatrixXd V(row, column - start + 1);
+
+	//V.setZero();
 	//	vector<double> v(R.rows(), 0.0);
 
-	for (int j = start - 1; j < column; ++j)
+	for (int j = start; j < column; ++j)
 	{
+
 		MatrixXd Vtemp(row, 1);
+		MatrixXd Vtemp2( row, 1 );
 		MatrixXd Qtemp = Q.block(0, 0, row, j - 1);
+
 		for (int i = 0; i < row; ++i)
 		{
-			V(i, j) = R(i, j);
-			Vtemp(i, 1) = V(i, j);
+			//V(i, j) = R(i, j);
+			Vtemp(i, 0) = R(i, j);
 		}
-		Vtemp = Vtemp - Qtemp * (Qtemp.transpose() * Vtemp);
-		Eigen::JacobiSVD<MatrixXd> svd(Vtemp, Eigen::ComputeThinU | Eigen::ComputeThinV);
-		double len = svd.singularValues()[0];
-		Vtemp = Vtemp / len;
-		Q.block(0, start - 1, row, 1) = Vtemp;
+
+		Vtemp2 = Vtemp - Qtemp * (Qtemp.transpose() * Vtemp);
+
+		//Eigen::JacobiSVD<MatrixXd> svd(Vtemp, Eigen::ComputeThinU | Eigen::ComputeThinV);
+		//double len = svd.singularValues()[0];
+		double len = Vtemp2.norm();
+
+		Vtemp = Vtemp2 / len;
+		Q.block(0, j, row, 1) = Vtemp;
 	}
-	R = Q;
-	return R;
+	
+	return Q;
 }
 
 MatrixXd PInv(MatrixXd &m)
@@ -42,7 +55,7 @@ MatrixXd PInv(MatrixXd &m)
 	//Eigen::MatrixXd JT = PInvmat.transpose();
 	//Eigen::MatrixXd pseudo_inv_J = JT * (PInvmat * JT).inverse();
 
-	double  pinvtoler = 1.e-6; // choose your tolerance wisely!
+	double pinvtoler = 1.e-6; // choose your tolerance wisely!
 	Eigen::JacobiSVD<MatrixXd> svd(m, Eigen::ComputeFullU | Eigen::ComputeFullV);
 	MatrixXd singularValues = svd.singularValues();
 	MatrixXd singularValues_inv = singularValues;

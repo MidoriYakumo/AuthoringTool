@@ -46,7 +46,7 @@ MatrixXd DecodeTranslation( MatrixXd &features, MatrixXi &faces, MatrixXd &temp 
 
 Vector3d ToRotVec(Matrix3d R);
 Matrix3d FromRotVec(Vector3d r);
-MatrixXd Ortho( MatrixXd R, int start );
+MatrixXd Ortho( MatrixXd R, int start = 0 );
 MatrixXd LoadTemplate();
 MatrixXi LoadNeighbor();
 MatrixXd LoadC();

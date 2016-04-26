@@ -125,7 +125,8 @@ void testMorph(){
 	morphed = MorphTo( projected, target, em.projected, semdata );
 
 	//---unproject from PCA space---
-	cout << "Unprojecting..." << endl;
+	cout << "Unprojecting..." << endl; 
+
 	em.LoadCoeffs();
 	unprojected = em.coeffs * projected + em.avg;
 	em.coeffs.resize( 0, 0 );
