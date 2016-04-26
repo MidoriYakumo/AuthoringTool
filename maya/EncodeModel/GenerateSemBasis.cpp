@@ -37,20 +37,23 @@ MatrixXd Ortho(MatrixXd R, int start = 0) {
 	return R;
 }
 
-MatrixXd PInv(MatrixXd &PInvmat)
+MatrixXd PInv(MatrixXd &m)
 {
-	Eigen::MatrixXd JT = PInvmat.transpose();
-	Eigen::MatrixXd pseudo_inv_J = JT * (PInvmat * JT).inverse();
+	//Eigen::MatrixXd JT = PInvmat.transpose();
+	//Eigen::MatrixXd pseudo_inv_J = JT * (PInvmat * JT).inverse();
 
-	//double  pinvtoler = 1.e-6; // choose your tolerance wisely!
-	//Eigen::JacobiSVD<MatrixXd> svd(Vtemp, Eigen::ComputeThinU | Eigen::ComputeThinV);
-	//double singularValues_inv = m_singularValues;
-	//for (long i = 0; i<m_workMatrix.cols(); ++i) {
-	//	if (m_singularValues(i) > pinvtoler)
-	//		singularValues_inv(i) = 1.0 / m_singularValues(i);
-	//	else singularValues_inv(i) = 0;
-	//PInvmat = (m_matrixV*singularValues_inv.asDiagonal()*m_matrixU.transpose());
-	return pseudo_inv_J;
+	double  pinvtoler = 1.e-6; // choose your tolerance wisely!
+	Eigen::JacobiSVD<MatrixXd> svd(m, Eigen::ComputeFullU | Eigen::ComputeFullV);
+	MatrixXd singularValues = svd.singularValues();
+	MatrixXd singularValues_inv = singularValues;
+	for (int i = 0; i<m.cols(); ++i) {
+		if (singularValues(i) > pinvtoler){
+			singularValues_inv(i) = 1.0 / singularValues(i);
+		}else{
+			singularValues_inv(i) = 0;
+		}
+	}
+	return svd.matrixV()*singularValues_inv.asDiagonal()*svd.matrixU().transpose();
 }
 
 /*

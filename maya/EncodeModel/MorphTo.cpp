@@ -21,13 +21,13 @@ MatrixXd MorphTo(MatrixXd start, MatrixXd target, MatrixXd subjects, MatrixXd se
 		}
 		means(1, i) = sub_sum / subjects.rows();
 	}
-	MatrixXd Temp1(subjects.rows() * subjects.rows(), subjects.cols());
+	MatrixXd Temp1(subjects.rows()/* * subjects.rows()*/, subjects.cols());
 	for (int i = 0; i < subjects.rows(); i++)
 	{
 		//Temp1.block<subjects.rows(), subjects.cols()>( i * subjects.rows() , 0) = subjects;
-		Temp1.block(i * subjects.rows(), 0, subjects.rows(), subjects.cols()) = subjects;
+		//Temp1.block(i * subjects.rows(), 0, subjects.rows(), subjects.cols()) = subjects;
+		Temp1.row( i ) = means;
 	}
-
 	semvals = semvals - Temp1;
 
 	MatrixXd X = PInv(subjects) * semvals;
