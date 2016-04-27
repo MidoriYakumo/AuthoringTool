@@ -3,12 +3,12 @@
 
 void saveData(){
 
-	fstream fin( "./data/coeffs1.dat", ios::in );
-	fstream fout( "./data/coeffs2.dat", ios::out | ios::binary );
+	fstream fin( "./data/projected.dat", ios::in );
+	fstream fout( "./data/projected2.dat", ios::out | ios::binary );
 	float f;
 
 	for( int i = 0; i < 1064; ++i ){
-		for( int j = 0; j < 193410; ++j ){
+		for( int j = 0; j < 1064; ++j ){
 			fin >> f;
 			fout.write( reinterpret_cast< const char * >( &f ), sizeof( float ) );
 		}
@@ -81,6 +81,28 @@ void testDecodeTrans(){
 
 void testMorph(){
 
+	fstream fout( "out1.txt", ios::out );
+	EncodeModel em;
+	MatrixXd morphed;
+	MatrixXd target;
+	MatrixXd semdata;
+
+	em.LoadSemdata();
+	em.LoadProjected();
+
+	cout << "Morphing..." << endl;
+	target = MatrixXd( 1, 2 );
+	target << 80, 140;
+	semdata = MatrixXd( 1064, 2 );
+	semdata.col( 0 ) = em.semdata.col( 5 );
+	semdata.col( 1 ) = em.semdata.col( 2 );
+	morphed = MorphTo( em.projected.col( 0 ), target, em.projected, semdata );
+
+	fout << morphed;
+}
+
+void testWhole(){
+
 	//---encode---
 	fstream fout( "out.txt", ios::out );
 	MatrixXd vertices;
@@ -118,7 +140,7 @@ void testMorph(){
 	//---morph to---
 	cout << "Morphing..." << endl;
 	target = MatrixXd( 1, 2 );
-	target << 40, 150;
+	target << 40, 130;
 	semdata = MatrixXd( 1064, 2 );
 	semdata.col( 0 ) = em.semdata.col( 5 );
 	semdata.col( 1 ) = em.semdata.col( 2 );
@@ -127,7 +149,7 @@ void testMorph(){
 	//---unproject from PCA space---
 	cout << "Unprojecting..." << endl; 
 	em.LoadCoeffs();
-	unprojected = em.coeffs * projected + em.avg;
+	unprojected = em.coeffs * morphed + em.avg;
 	em.coeffs.resize( 0, 0 );
 
 	//---decode---
@@ -143,9 +165,34 @@ void testMorph(){
 	WriteObj( "../s1p0_out.obj", modelout, faces );
 }
 
+void testOther(){
+
+	MatrixXd a( 1064, 1064 );
+	MatrixXd b( 1, 1064 );
+	fstream fin( "out.txt", ios::in );
+	fstream fin2( "in.txt", ios::in );
+	float f;
+
+	for( int i = 0; i < 1064; ++i ){
+		for( int j = 0; j < 1064; ++j ){
+			fin >> f;
+			a( i, j ) = f;
+		}
+	}
+	
+	for( int i = 0; i < 1064; ++i ){
+		fin2 >> f;
+		b( i ) = f;
+	}
+
+	cout << b * a;
+}
+
 int main(){
 	
-	testMorph();
+	//saveData();
+	//testOther();
+	testWhole();
 	//testDecode();
 	//testDecodeTrans();
 	//testMorph();

@@ -85,14 +85,14 @@ void EncodeModel::LoadAvg(){
 
 void EncodeModel::LoadProjected(){
 
-	fstream fin( "./data/projected.dat", ios::in );
-	double d;
+	fstream fin( "./data/projected.dat", ios::in | ios::binary );
+	float f;
 
 	projected = MatrixXd( 1064, 1064 );
 	for( int i = 0; i < 1064; ++i ){
 		for( int j = 0; j < 1064; ++j ){
-			fin >> d;
-			projected( j, i ) = d;
+			fin.read( reinterpret_cast< char * >( &f ), sizeof( float ) );
+			projected( i, j ) = f;
 		}
 	}
 }

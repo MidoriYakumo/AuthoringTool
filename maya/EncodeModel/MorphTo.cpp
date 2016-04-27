@@ -11,19 +11,20 @@ MatrixXd Estsem(MatrixXd obj, MatrixXd means, MatrixXd B, MatrixXd K)
 MatrixXd MorphTo(MatrixXd start, MatrixXd target, MatrixXd subjects, MatrixXd semvals) 
 {
 	//---gensembasis---
-	subjects = subjects.transpose();
-	MatrixXd means(1, subjects.cols());
-	for (int i = 0; i < subjects.cols(); ++i)
+	subjects.transposeInPlace();
+
+	MatrixXd means(1, semvals.cols());
+	for (int i = 0; i < semvals.cols(); ++i)
 	{
-		int sub_sum = 0;
-		for (int j = 0; j < subjects.rows(); ++j)
+		double sub_sum = 0;
+		for (int j = 0; j < semvals.rows(); ++j)
 		{
-			sub_sum += subjects(j, i);
+			sub_sum += semvals(j, i);
 		}
-		means(1, i) = sub_sum / subjects.rows();
+		means(0, i) = sub_sum / semvals.rows();
 	}
-	MatrixXd Temp1(subjects.rows()/* * subjects.rows()*/, subjects.cols());
-	for (int i = 0; i < subjects.rows(); i++)
+	MatrixXd Temp1(semvals.rows()/* * subjects.rows()*/, means.cols());
+	for (int i = 0; i < semvals.rows(); i++)
 	{
 		//Temp1.block<subjects.rows(), subjects.cols()>( i * subjects.rows() , 0) = subjects;
 		//Temp1.block(i * subjects.rows(), 0, subjects.rows(), subjects.cols()) = subjects;
@@ -39,7 +40,7 @@ MatrixXd MorphTo(MatrixXd start, MatrixXd target, MatrixXd subjects, MatrixXd se
 	MatrixXd D = X.array().square();
 	MatrixXd D1 = D.colwise().sum();
 	MatrixXd K = D1.cwiseSqrt().cwiseInverse();
-	MatrixXd Ssem = subjects * B;
+	//MatrixXd Ssem = subjects * B;
 	//---end gensembasis---
 
 	MatrixXd Temp2(means.rows() * target.rows(), means.cols());
@@ -59,7 +60,7 @@ MatrixXd MorphTo(MatrixXd start, MatrixXd target, MatrixXd subjects, MatrixXd se
 	MatrixXd Sem;
 	MatrixXd TempTarget;
 	MatrixXd BInv = B.inverse();
-
+	
 	for (int i = 0; i < target.rows(); ++i)
 	{
 		Sem = start.transpose() * B;

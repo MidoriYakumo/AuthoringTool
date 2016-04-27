@@ -9,7 +9,7 @@ MatrixXd Ortho(MatrixXd R, int start) {
 	int column = R.cols();
 	MatrixXd Q = MatrixXd::Zero(row, column);
 
-	for (int j = 0; j < start - 1; ++j)
+	for (int j = 0; j < start; ++j)
 	{
 		for (int i = 0; i < row; ++i)
 		{
@@ -33,9 +33,9 @@ MatrixXd Ortho(MatrixXd R, int start) {
 			Vtemp(i, 0) = R(i, j);
 		}
 
-		if( j > 1 ){
+		if( j > 0 ){
 
-			MatrixXd Qtemp = Q.block(0, 0, row, j - 1);
+			MatrixXd Qtemp = Q.block(0, 0, row, j);
 
 			Vtemp2 = Vtemp - Qtemp * (Qtemp.transpose() * Vtemp);
 		}else{

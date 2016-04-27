@@ -62,68 +62,6 @@ Matrix3d FromRotVec( Vector3d r )
 
 	return R;
 }
-
-/*
-% A = ortho(A)
-% orthogonalize matrix A starting from column start
-function A = ortho(A, start)
-
-if ~exist('start','var')
-start = 1;
-end
-n = size(A,2);
-Q=zeros(size(A));
-%R=zeros(n,n);
-Q(:,1:start-1) = A(:,1:start-1);
-
-for j = start:n
-v = A(:,j);
-%    x = Q(:,1:j-1)' * v;
-v = v - Q(:,1:j-1) * (Q(:,1:j-1)' * v);
-%    for i = 1:j-1
-%        v = v-Q(:,i)'*v*Q(:,i);
-%    end
-%    Q(:,j) = v / R(j,j);
-Q(:,j) = v / norm(v);
-end
-A = Q;
-*/
-/*
-MatrixXd Ortho( MatrixXd R, int start = 0 ){
-
-	int row = R.rows();
-	int column = R.cols();
-	MatrixXd Q(row, column);
-	Q.setZero();
-	for (int i = 0; i < row; ++i)
-		for (int j = 0; j < start - 1; ++j)
-	{
-    		Q(i, j) = R(i, j);
-	}
-
-	MatrixXd V(row, column - start + 1);
-	V.setZero();
-//	vector<double> v(R.rows(), 0.0);
-
-	for (int j = start - 1; j < column; ++j)
-	{
-		MatrixXd Vtemp(row, 1);
-		MatrixXd Qtemp = Q.block(0, 0, row, j-1);
-		for (int i = 0; i < row; ++i)
-		{
-			V(i, j) = R(i, j);
-			Vtemp(i, 1) = V(i, j);
-		}
-		Vtemp = Vtemp - Qtemp * (Qtemp.transpose() * Vtemp);
-		Eigen::JacobiSVD<MatrixXd> svd(Vtemp, Eigen::ComputeThinU | Eigen::ComputeThinV);
-		double len = svd.singularValues()[0];
-		Vtemp = Vtemp / len;
-		Q.block(0, start - 1, row, 1) = Vtemp;
-	}
-	R = Q;
-	return R;
-}
-*/
 	 
 void MySM3Block( vector< Triplet< double > > &vtd, int row, int col, Matrix3d &dm3 ){
 
