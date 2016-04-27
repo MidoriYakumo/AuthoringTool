@@ -118,7 +118,7 @@ void testMorph(){
 	//---morph to---
 	cout << "Morphing..." << endl;
 	target = MatrixXd( 1, 2 );
-	target << 60, 200;
+	target << 40, 150;
 	semdata = MatrixXd( 1064, 2 );
 	semdata.col( 0 ) = em.semdata.col( 5 );
 	semdata.col( 1 ) = em.semdata.col( 2 );
@@ -126,7 +126,6 @@ void testMorph(){
 
 	//---unproject from PCA space---
 	cout << "Unprojecting..." << endl; 
-
 	em.LoadCoeffs();
 	unprojected = em.coeffs * projected + em.avg;
 	em.coeffs.resize( 0, 0 );

@@ -7,9 +7,7 @@ MatrixXd Ortho(MatrixXd R, int start) {
 
 	int row = R.rows();
 	int column = R.cols();
-	MatrixXd Q(row, column);
-
-	Q.setZero();
+	MatrixXd Q = MatrixXd::Zero(row, column);
 
 	for (int j = 0; j < start - 1; ++j)
 	{
@@ -20,7 +18,6 @@ MatrixXd Ortho(MatrixXd R, int start) {
 	}
 
 	//MatrixXd V(row, column - start + 1);
-
 	//V.setZero();
 	//	vector<double> v(R.rows(), 0.0);
 
@@ -29,7 +26,6 @@ MatrixXd Ortho(MatrixXd R, int start) {
 
 		MatrixXd Vtemp(row, 1);
 		MatrixXd Vtemp2( row, 1 );
-		MatrixXd Qtemp = Q.block(0, 0, row, j - 1);
 
 		for (int i = 0; i < row; ++i)
 		{
@@ -37,8 +33,15 @@ MatrixXd Ortho(MatrixXd R, int start) {
 			Vtemp(i, 0) = R(i, j);
 		}
 
-		Vtemp2 = Vtemp - Qtemp * (Qtemp.transpose() * Vtemp);
+		if( j > 1 ){
 
+			MatrixXd Qtemp = Q.block(0, 0, row, j - 1);
+
+			Vtemp2 = Vtemp - Qtemp * (Qtemp.transpose() * Vtemp);
+		}else{
+			Vtemp2 = Vtemp;
+		}
+		
 		//Eigen::JacobiSVD<MatrixXd> svd(Vtemp, Eigen::ComputeThinU | Eigen::ComputeThinV);
 		//double len = svd.singularValues()[0];
 		double len = Vtemp2.norm();
