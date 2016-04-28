@@ -32,5 +32,4 @@ public:
 	static const char *heightFlag, *heightLongFlag;
 	static const char *weightFlag, *weightLongFlag;
 	static const char *fileFlag, *fileLongFlag;
-
 };

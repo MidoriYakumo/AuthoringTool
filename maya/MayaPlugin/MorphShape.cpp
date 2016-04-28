@@ -6,12 +6,13 @@
 #include <fstream>
 #include <ios>
 
+EncodeModel MorphShape::em;
 const char *MorphShape::heightFlag = "-h";
 const char *MorphShape::heightLongFlag = "-height";
 const char *MorphShape::weightFlag = "-w";
 const char *MorphShape::weightLongFlag = "-weight";
-const char *MorphShape::fileFlag = "-f"; 
-const char *MorphShape::fileLongFlag = "-file"; 
+const char *MorphShape::fileFlag = "-f";
+const char *MorphShape::fileLongFlag = "-file";
 
 MorphShape::MorphShape() : MPxCommand()
 {
