@@ -30,8 +30,8 @@ MSyntax MorphShape::newSyntax()
 {
 	MSyntax syntax;
 	syntax.addFlag(fileFlag, fileLongFlag, MSyntax::kString );  //文件名
-	syntax.addFlag(heightFlag, heightLongFlag, MSyntax::kString);
-	syntax.addFlag(weightFlag, weightLongFlag, MSyntax::kString);
+	syntax.addFlag(heightFlag, heightLongFlag, MSyntax::kDouble);
+	syntax.addFlag(weightFlag, weightLongFlag, MSyntax::kDouble);
 	return syntax;
 }
 
@@ -39,11 +39,23 @@ MStatus MorphShape::doIt( const MArgList& args ){
 
 	MArgDatabase argData( syntax(), args ); //get the database of the arguments 调用一个command
 	MString filename;
+	double height = 0.0;
+	double weight = 0.0;
 
-	if( argData.isFlagSet( fileFlag ) ) //数据库有没有提供这个参数 -f，有-f就取出-f后面跟着的值
+	if(argData.isFlagSet( fileFlag ) ) //数据库有没有提供这个参数 -f，有-f就取出-f后面跟着的值
 		argData.getFlagArgument( fileFlag, 0, filename ); // -f , filename 
 
+	if (argData.isFlagSet(heightFlag))
+		argData.getFlagArgument(heightFlag, 0, height);
+
+	if (argData.isFlagSet(weightFlag))
+		argData.getFlagArgument(weightFlag, 0, weight);
+
+	cout << "height" << height << endl;
+	cout << "weight" << weight << endl;
+
 	
+
 
 	return MStatus::kSuccess;
 }
