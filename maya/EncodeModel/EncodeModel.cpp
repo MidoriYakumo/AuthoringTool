@@ -3,13 +3,13 @@
 
 void EncodeModel::LoadFaces(){
 
-	fstream fin( "./data/faces.dat", ios::in );
+	fstream fin( "./data/faces.dat", ios::in | ios::binary );
 	int a;
 
 	faces = MatrixXi( 12894, 3 );
 	for( int i = 0; i < 12894; ++i ){
 		for( int j = 0; j < 3; ++j ){
-			fin >> a;
+			fin.read( reinterpret_cast< char * >( &a ), sizeof( int ) );
 			faces( i, j ) = a - 1;
 		}
 	}
@@ -17,13 +17,13 @@ void EncodeModel::LoadFaces(){
 
 void EncodeModel::LoadNeigh(){
 
-	fstream fin( "./data/neigh.dat", ios::in );
+	fstream fin( "./data/neigh.dat", ios::in | ios::binary );
 	int a;
 
 	neigh = MatrixXi( 12894, 3 );
 	for( int i = 0; i < 12894; ++i ){
 		for( int j = 0; j < 3; ++j ){
-			fin >> a;
+			fin.read( reinterpret_cast< char * >( &a ), sizeof( int ) );
 			neigh( i, j ) = a - 1;
 		}
 	}
@@ -31,12 +31,14 @@ void EncodeModel::LoadNeigh(){
 
 void EncodeModel::LoadReconmean(){
 
-	fstream fin( "./data/reconmean.dat", ios::in );
-	double a, b, c;
+	fstream fin( "./data/reconmean.dat", ios::in | ios::binary );
+	float a, b, c;
 
 	reconmean = MatrixXd( 6449, 3 );
 	for( int i = 0; i < 6449; ++i ){
-		fin >> a >> b >> c;
+		fin.read( reinterpret_cast< char * >( &a ), sizeof( float ) );
+		fin.read( reinterpret_cast< char * >( &b ), sizeof( float ) );
+		fin.read( reinterpret_cast< char * >( &c ), sizeof( float ) );
 		reconmean( i, 0 ) = a;
 		reconmean( i, 1 ) = b;
 		reconmean( i, 2 ) = c;
@@ -73,12 +75,12 @@ void EncodeModel::LoadCoeffs(){
 
 void EncodeModel::LoadAvg(){
 	
-	fstream fin( "./data/avg.dat", ios::in );
+	fstream fin( "./data/avg.dat", ios::in | ios::binary );
 	float f;
 
 	avg = MatrixXd( 193410, 1 );
 	for( int i = 0; i < 193410; ++i ){
-		fin >> f;
+		fin.read( reinterpret_cast< char * >( &f ), sizeof( float ) );
 		avg( i ) = f;
 	}
 }
@@ -99,14 +101,14 @@ void EncodeModel::LoadProjected(){
 
 void EncodeModel::LoadSemdata(){
 
-	fstream fin( "./data/semdata.dat", ios::in );
-	double d;
+	fstream fin( "./data/semdata.dat", ios::in | ios::binary );
+	float f;
 
 	semdata = MatrixXd( 1064, 25 );
 	for( int i = 0; i < 25; ++i ){
 		for( int j = 0; j < 1064; ++j ){
-			fin >> d;
-			semdata( j, i ) = d;
+			fin.read( reinterpret_cast< char * >( &f ), sizeof( float ) );
+			semdata( j, i ) = f;
 		}
 	}
 }

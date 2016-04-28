@@ -3,14 +3,14 @@
 
 void saveData(){
 
-	fstream fin( "./data/projected.dat", ios::in );
-	fstream fout( "./data/projected2.dat", ios::out | ios::binary );
-	float f;
+	fstream fin( "./data/semdata.dat", ios::in );
+	fstream fout( "./data/semdata2.dat", ios::out | ios::binary );
+	float a;
 
 	for( int i = 0; i < 1064; ++i ){
-		for( int j = 0; j < 1064; ++j ){
-			fin >> f;
-			fout.write( reinterpret_cast< const char * >( &f ), sizeof( float ) );
+		for( int j = 0; j < 25; ++j ){
+			fin >> a;
+			fout.write( reinterpret_cast< const char * >( &a ), sizeof( float ) );
 		}
 		cout << i << endl;
 	}
@@ -21,14 +21,14 @@ void testEncode(){
 	fstream fout( "out.txt", ios::out );
 	MatrixXd vertices;
 	MatrixXi faces;
-	MatrixXd temp;
-	MatrixXi neigh;
 	MatrixXd encoded;
+	EncodeModel em;
+
+	em.LoadReconmean();
+	em.LoadNeigh();
 
 	ReadObj( "../s1p0.obj", vertices, faces );
-	temp = LoadTemplate();
-	neigh = LoadNeighbor();
-	encoded = EncodeRelativeRotation( vertices, faces, temp, neigh );
+	encoded = EncodeRelativeRotation( vertices, faces, em.reconmean, em.neigh );
 
 	for( int i = 0; i < encoded.cols(); ++i ){
 		fout << encoded( i ) << endl;
@@ -42,6 +42,7 @@ void testDecode(){
 	MatrixXd encoded( 1, 193410 );
 	MatrixXi neigh;
 	MatrixXd features;
+	EncodeModel em;
 	double a;
 	
 	for( int i = 0; i < 193410; ++i ){
@@ -49,8 +50,8 @@ void testDecode(){
 		encoded( i ) = a;
 	}
 
-	neigh = LoadNeighbor();
-	features = DecodeRelativeRotation( encoded, neigh );
+	em.LoadNeigh();
+	features = DecodeRelativeRotation( encoded, em.neigh );
 	
 	for( int i = 0; i < features.cols(); ++i ){
 		fout << features( i ) << endl;
@@ -63,14 +64,13 @@ void testDecodeTrans(){
 	fstream fout( "out.txt", ios::out );
 	MatrixXd features( 1, 128940 );
 	MatrixXd modelout;
+	EncodeModel em;
 	double d;
 
 	for( int i = 0; i < 128940; ++i ){
 		fin >> d;
 		features( i ) = d;
 	}
-
-	EncodeModel em;
 
 	em.LoadFaces();
 	em.LoadReconmean();
@@ -82,10 +82,10 @@ void testDecodeTrans(){
 void testMorph(){
 
 	fstream fout( "out1.txt", ios::out );
-	EncodeModel em;
 	MatrixXd morphed;
 	MatrixXd target;
 	MatrixXd semdata;
+	EncodeModel em;
 
 	em.LoadSemdata();
 	em.LoadProjected();
@@ -125,7 +125,7 @@ void testWhole(){
 	
 	//---read model---
 	cout << "Reading OBJ..." << endl;
-	ReadObj( "../s1p0.obj", vertices, faces );
+	ReadObj( "../s1p4.obj", vertices, faces );
 
 	//---encode---
 	cout << "Encoding..." << endl;
@@ -162,7 +162,7 @@ void testWhole(){
 
 	//---write model---
 	cout << "Writing OBJ..." << endl;
-	WriteObj( "../s1p0_out.obj", modelout, faces );
+	WriteObj( "../s1p4_out.obj", modelout, faces );
 }
 
 void testOther(){
@@ -192,10 +192,10 @@ int main(){
 	
 	//saveData();
 	//testOther();
-	testWhole();
 	//testDecode();
 	//testDecodeTrans();
 	//testMorph();
+	testWhole();
 
 	return 0;
 }

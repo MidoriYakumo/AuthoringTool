@@ -24,22 +24,10 @@
     <ClCompile Include="WriteObj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LearnOptimalEstimator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GenerateShapeModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MainFunctionHere.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GenerateSemBasis.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DoPCA.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="estsem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Upright.cpp">
@@ -54,15 +42,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LoadTemplate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadNeighbor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadC.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MorphTo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -74,16 +53,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LearnOptimalEstimator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GenerateShapeModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EncodeModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Upright.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -124,6 +94,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="data\semdata.dat">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\coeffs.dat">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

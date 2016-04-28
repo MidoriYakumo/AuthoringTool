@@ -15,7 +15,9 @@
     <ClCompile Include="BodyReshaper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MorphShape.cpp" />
+    <ClCompile Include="MorphShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BodyReshaper.h">

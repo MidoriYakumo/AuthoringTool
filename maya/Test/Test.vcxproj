@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}</ProjectGuid>
+    <ProjectGuid>{77E79600-3501-4C6E-808F-0ECA340BB892}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>EncodeModel</RootNamespace>
+    <RootNamespace>Test</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -88,7 +88,6 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\eigen1</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -102,7 +101,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\eigen1</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\eigen1;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -118,7 +117,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\eigen1</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,7 +134,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\eigen1</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\eigen1;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,41 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DecodeRelativeRotation.cpp" />
-    <ClCompile Include="DecodeTranslation.cpp" />
-    <ClCompile Include="DoPCA.cpp" />
-    <ClCompile Include="EncodeModel.cpp" />
-    <ClCompile Include="EncodeRelativeRotation.cpp" />
-    <ClCompile Include="GenerateSemBasis.cpp" />
-    <ClCompile Include="MatrixManipulation.cpp" />
-    <ClCompile Include="MorphTo.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="ReadObj.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Upright.cpp" />
-    <ClCompile Include="WriteObj.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="EncodeModel.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="in.txt" />
-    <Text Include="out.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="data\avg.dat" />
-    <None Include="data\C.dat" />
-    <None Include="data\coeffs.dat" />
-    <None Include="data\decodedrot.dat" />
-    <None Include="data\encoded.dat" />
-    <None Include="data\faces.dat" />
-    <None Include="data\modelout.dat" />
-    <None Include="data\neigh.dat" />
-    <None Include="data\projected.dat" />
-    <None Include="data\reconmean.dat" />
-    <None Include="data\semdata.dat" />
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

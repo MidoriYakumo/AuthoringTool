@@ -28,7 +28,7 @@ projected = coeffs' * models;
 
 MatrixXd DoPCA( MatrixXd &model ){
 
-	int N = model.cols();
+	int N = ( int )model.cols();
 	MatrixXd avg( model.rows(), 1 );
 
 	for( int i = 0; i < avg.rows(); ++i ){

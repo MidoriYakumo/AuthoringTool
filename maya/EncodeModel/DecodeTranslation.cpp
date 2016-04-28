@@ -3,11 +3,11 @@
 
 MatrixXd DecodeTranslation( MatrixXd &features, MatrixXi &faces, MatrixXd &temp ){
 	
-	SparseMatrix< double > M( temp.rows() + 1, temp.rows() );
+	SparseMatrix< double > M( ( int )temp.rows() + 1, ( int )temp.rows() );
 	vector< Triplet< double > > vtd;
 	MatrixXd dx = MatrixXd::Zero( temp.rows() + 1, 3 );
 
-	M.reserve( 10 * temp.rows() );
+	M.reserve( 10 * ( int )temp.rows() );
 
 	for( int i = 0; i < faces.rows(); ++i ){
 
@@ -62,7 +62,7 @@ MatrixXd DecodeTranslation( MatrixXd &features, MatrixXi &faces, MatrixXd &temp 
 		}
 	}
 
-	vtd.push_back( Triplet< double >( temp.rows(), 0, 1. ) );
+	vtd.push_back( Triplet< double >( ( int )temp.rows(), 0, 1. ) );
 	M.setFromTriplets( vtd.begin(), vtd.end() );
 	
 	SparseMatrix< double > Mt( M.transpose() );

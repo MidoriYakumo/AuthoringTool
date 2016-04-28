@@ -37,7 +37,7 @@ MatrixXd DecodeRelativeRotation( MatrixXd &input, MatrixXi &neigh ){
 	}
 
 	int step( 15 );
-	int N( neigh.rows() );
+	int N = ( int )neigh.rows();
 	Vector3d direction = Vector3d::Zero();
 	MatrixXd features( 1, 10 * N ); features.setZero();
 	SparseMatrix< double > A( ( N * 9 >> 1 ) + 3, 3 * N );

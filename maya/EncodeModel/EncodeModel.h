@@ -39,25 +39,19 @@ using std::ios;
 
 void ReadObj( std::string filename, MatrixXd &ret_vertices, MatrixXi &ret_faces );
 void WriteObj( std::string filename, MatrixXd &vertices, MatrixXi &faces );
+void MySM3Block(vector< Triplet< double > > &vtd, int row, int col, Matrix3d &dm3);
+
+Vector3d ToRotVec(Matrix3d R);
+Matrix3d FromRotVec(Vector3d r);
 
 MatrixXd EncodeRelativeRotation( MatrixXd &model, MatrixXi &faces, MatrixXd &temp, MatrixXi &neigh);
 MatrixXd DecodeRelativeRotation( MatrixXd &input, MatrixXi &neigh );
 MatrixXd DecodeTranslation( MatrixXd &features, MatrixXi &faces, MatrixXd &temp );
 
-Vector3d ToRotVec(Matrix3d R);
-Matrix3d FromRotVec(Vector3d r);
-MatrixXd Ortho( MatrixXd R, int start = 0 );
-MatrixXd LoadTemplate();
-MatrixXi LoadNeighbor();
-MatrixXd LoadC();
-
-void MySM3Block(vector< Triplet< double > > &vtd, int row, int col, Matrix3d &dm3);
-
- // GenSemBasis( MatrixXd subjects, MatrixXd semvals);
-MatrixXd PInv(MatrixXd &PInvmat);
-MatrixXd Estsem(MatrixXd obj, MatrixXd means, MatrixXd B, MatrixXd K);
 MatrixXd MorphTo(MatrixXd start, MatrixXd target, MatrixXd subjects, MatrixXd semvals);
+MatrixXd Ortho( MatrixXd R, int start = 0 );
 MatrixXd Upright( MatrixXd &in );
+MatrixXd PInv(MatrixXd &PInvmat);
 MatrixXd DoPCA( MatrixXd &in );
 
 class EncodeModel{

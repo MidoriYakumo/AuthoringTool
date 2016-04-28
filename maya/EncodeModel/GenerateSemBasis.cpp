@@ -5,8 +5,8 @@ using Eigen::JacobiSVD;
 //orthogonalize matrix A starting from column start
 MatrixXd Ortho(MatrixXd R, int start) {
 
-	int row = R.rows();
-	int column = R.cols();
+	int row = ( int )R.rows();
+	int column = ( int )R.cols();
 	MatrixXd Q = MatrixXd::Zero(row, column);
 
 	for (int j = 0; j < start; ++j)
@@ -16,11 +16,7 @@ MatrixXd Ortho(MatrixXd R, int start) {
 			Q(i, j) = R(i, j);
 		}
 	}
-
-	//MatrixXd V(row, column - start + 1);
-	//V.setZero();
-	//	vector<double> v(R.rows(), 0.0);
-
+	
 	for (int j = start; j < column; ++j)
 	{
 
@@ -29,7 +25,6 @@ MatrixXd Ortho(MatrixXd R, int start) {
 
 		for (int i = 0; i < row; ++i)
 		{
-			//V(i, j) = R(i, j);
 			Vtemp(i, 0) = R(i, j);
 		}
 
@@ -42,8 +37,6 @@ MatrixXd Ortho(MatrixXd R, int start) {
 			Vtemp2 = Vtemp;
 		}
 		
-		//Eigen::JacobiSVD<MatrixXd> svd(Vtemp, Eigen::ComputeThinU | Eigen::ComputeThinV);
-		//double len = svd.singularValues()[0];
 		double len = Vtemp2.norm();
 
 		Vtemp = Vtemp2 / len;
@@ -55,9 +48,6 @@ MatrixXd Ortho(MatrixXd R, int start) {
 
 MatrixXd PInv(MatrixXd &m)
 {
-	//Eigen::MatrixXd JT = PInvmat.transpose();
-	//Eigen::MatrixXd pseudo_inv_J = JT * (PInvmat * JT).inverse();
-
 	double pinvtoler = 1.e-6; // choose your tolerance wisely!
 	Eigen::JacobiSVD<MatrixXd> svd(m, Eigen::ComputeFullU | Eigen::ComputeFullV);
 	MatrixXd singularValues = svd.singularValues();
@@ -71,35 +61,3 @@ MatrixXd PInv(MatrixXd &m)
 	}
 	return svd.matrixV()*singularValues_inv.asDiagonal()*svd.matrixU().transpose();
 }
-
-/*
-MatrixXd GenSemBasis(MatrixXd subjects, MatrixXd semvals)
-{
-	subjects = subjects.transpose();
-	MatrixXd means(1, subjects.cols());
-	int sub_sum = 0;
-	for (int i = 0; i < subjects.cols(); ++i)
-	 {
-		 for (int j = 0; j < subjects.rows(); ++j)
-		 {
-			 sub_sum += subjects(j, i);
-		 }
-		 means(1, i) = sub_sum / subjects.rows();
-	 }
-	MatrixXd Temp1(subjects.rows() * subjects.rows() , subjects.cols());
-	for (int i = 0; i < subjects.rows(); i++)
-	{
-	//Temp1.block<subjects.rows(), subjects.cols()>( i * subjects.rows() , 0) = subjects;
-		Temp1.block(i * subjects.rows(), 0, subjects.rows(), subjects.cols()) = subjects;
-	}
-	semvals = semvals - Temp1;
-	MatrixXd X = PInv(subjects) * semvals;
-	MatrixXd B1(subjects.rows(), subjects.cols());
-	B1.block(0, 0, subjects.rows(), 2) = X;
-	B1.block(0, 2, subjects.rows(), subjects.cols() - semvals.cols()) = MatrixXd::Identity(subjects.cols(), subjects.cols() - semvals.cols());
-	MatrixXd B = Ortho(B1);	
-	MatrixXd D = X.array().square();
-	MatrixXd D1 = D.colwise().sum();
-	MatrixXd K = D1.cwiseSqrt().cwiseInverse();
-	MatrixXd Ssem = subjects * B;
-} */
