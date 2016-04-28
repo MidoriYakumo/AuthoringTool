@@ -17,6 +17,7 @@ public:
 
 class MorphShape : public MPxCommand
 {
+
 public:
 	MorphShape();
 	virtual ~MorphShape();
@@ -25,4 +26,8 @@ public:
 	MStatus doIt( const MArgList& args );
 
 	static EncodeModel em;
+	static const char *heightFlag, *heightLongFlag;
+	static const char *weightFlag, *weightLongFlag = "-weight";
+	static const char *fileFlag = "-f", *fileLongFlag = "-file";
+
 };

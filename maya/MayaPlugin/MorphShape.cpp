@@ -1,5 +1,4 @@
-﻿
-#include "BodyReshaper.h"
+﻿#include "BodyReshaper.h"
 #include "../EncodeModel/EncodeModel.h"
 
 #include <maya/MGlobal.h>
@@ -7,27 +6,33 @@
 #include <fstream>
 #include <ios>
 
-MorphShape::MorphShape() : MPxCommand() {
+const char *heightFlag = "-h";
+const char *heightLongFlag = "-height";
+const char *weightFlag = "-w";
+const char *weightLongFlag = "-weight";
+const char *fileFlag = "-f"; 
+const char *fileLongFlag = "-file"; 
 
+MorphShape::MorphShape() : MPxCommand()
+{
 }
 
-MorphShape::~MorphShape() {
-
+MorphShape::~MorphShape() 
+{
 }
 
-const char *fileFlag = "-f", *fileLongFlag = "-file";
 
-void* MorphShape::creator(){ 
-
+void* MorphShape::creator()
+{ 
 	return new MorphShape(); 
 }
 
-MSyntax MorphShape::newSyntax(){
-
+MSyntax MorphShape::newSyntax()
+{
 	MSyntax syntax;
-
-	syntax.addFlag( fileFlag, fileLongFlag, MSyntax::kString );  //文件名
-
+	syntax.addFlag(fileFlag, fileLongFlag, MSyntax::kString );  //文件名
+	syntax.addFlag(heightFlag, heightLongFlag, MSyntax::kString);
+	syntax.addFlag(weightFlag, weightLongFlag, MSyntax::kString);
 	return syntax;
 }
 
