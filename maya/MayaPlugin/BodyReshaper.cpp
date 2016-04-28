@@ -43,6 +43,7 @@ MStatus BodyReshaper::doIt( const MArgList& args ){
 	cout << "Automatic rigging: " << filename << endl;
 
 	Mesh mesh( filename.asChar() );
+	RotateMesh( mesh );
 	Skeleton skeleton = HumanSkeleton();
 	PinocchioOutput output = autorig( skeleton, mesh );
 
@@ -118,4 +119,16 @@ MStatus BodyReshaper::doIt( const MArgList& args ){
 	}
 	
 	return MStatus::kSuccess;
+}
+
+void BodyReshaper::RotateMesh( Mesh &mesh ){
+
+	Quaternion<> transform( Vector3( 1., 0., 0 ), -90. * M_PI / 180. );
+
+	for( auto &e : mesh.vertices ){
+		e.pos = transform * e.pos;
+	}
+
+	mesh.normalizeBoundingBox();
+	mesh.computeVertexNormals();
 }

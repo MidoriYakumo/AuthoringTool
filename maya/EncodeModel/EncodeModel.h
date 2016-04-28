@@ -66,6 +66,8 @@ public:
 	void LoadProjected();
 	void LoadSemdata();
 
+	void SetFilepath( string filepath );
+
 	MatrixXi faces;
 	MatrixXi neigh;
 	MatrixXd reconmean;
@@ -74,4 +76,6 @@ public:
 	MatrixXd avg;
 	MatrixXd projected;
 	MatrixXd semdata;
+
+	string filepath;
 };

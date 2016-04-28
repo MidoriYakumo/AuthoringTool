@@ -4,6 +4,7 @@
 #include <maya/MSyntax.h>
 
 #include "../EncodeModel/EncodeModel.h"
+#include "../AutomaticRigging/pinocchioApi.h"
 
 class BodyReshaper : public MPxCommand
 {
@@ -13,6 +14,8 @@ public:
 	static void* creator(); //固定的
 	static MSyntax newSyntax(); 
 	MStatus doIt( const MArgList& args );
+
+	void RotateMesh( Mesh &mesh );
 
 	static const char *fileFlag, *fileLongFlag;
 };
@@ -27,8 +30,9 @@ public:
 	static MSyntax newSyntax(); 
 	MStatus doIt( const MArgList& args );
 
+	static int id;
+	static string pluginPath;
 	static EncodeModel em;
-
 	static const char *heightFlag, *heightLongFlag;
 	static const char *weightFlag, *weightLongFlag;
 	static const char *fileFlag, *fileLongFlag;

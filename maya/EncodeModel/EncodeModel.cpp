@@ -1,6 +1,10 @@
 
 #include "EncodeModel.h"
 
+void EncodeModel::SetFilepath( string filepath ){
+	this->filepath = filepath;
+}
+
 void EncodeModel::LoadFaces(){
 
 	fstream fin( "C:/Users/Liang Peng/Documents/GitHub/AuthoringTool/maya/EncodeModel/data/faces.dat", ios::in | ios::binary );

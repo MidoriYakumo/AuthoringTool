@@ -11,6 +11,8 @@ MStatus initializePlugin( MObject obj ) //打钩
     MStatus   status = MStatus::kSuccess;
     MFnPlugin plugin( obj, "Figure Reshaper", "1.0", "1.0" );
 
+	MorphShape::pluginPath = plugin.loadPath().asChar();
+
     //---register command---
     status = plugin.registerCommand( "FigureReshaper", BodyReshaper::creator, BodyReshaper::newSyntax );
 	if (!status){ status.perror( "registerCommand" ); return status; }

@@ -8,7 +8,9 @@
 
 #pragma comment( lib, "../MayaPlugin/x64/Release/EncodeModel.lib" )
 
+int MorphShape::id = 0;
 EncodeModel MorphShape::em;
+string MorphShape::pluginPath;
 const char *MorphShape::heightFlag = "-h";
 const char *MorphShape::heightLongFlag = "-height";
 const char *MorphShape::weightFlag = "-w";
@@ -80,7 +82,7 @@ MStatus MorphShape::doIt( const MArgList& args ){
 
 	//---read model---
 	cout << "Reading OBJ..." << endl;
-	ReadObj( "C:/Users/Liang Peng/Documents/GitHub/AuthoringTool/maya/s1p0.obj", vertices, faces );
+	ReadObj( filename.asChar(), vertices, faces );
 
 	//---encode---
 	cout << "Encoding..." << endl;
@@ -117,7 +119,15 @@ MStatus MorphShape::doIt( const MArgList& args ){
 
 	//---write model---
 	cout << "Writing OBJ..." << endl;
-	WriteObj( "C:/Users/Liang Peng/Documents/GitHub/AuthoringTool/maya/out.obj", modelout, faces );
+	WriteObj( MorphShape::pluginPath + "/../out.obj", modelout, faces );
+
+	MString command;
+	
+	command = command + "file -import -type \"OBJ\" -namespace \"body"
+		+ MorphShape::id + "\" -pr \"" + MorphShape::pluginPath.c_str()
+		+ "/../out.obj\";" + "setAttr \"body" + MorphShape::id + ":Mesh.rotateX\" -90;";
+	++MorphShape::id;
+	MGlobal::executeCommand( command );
 
 	return MStatus::kSuccess;
 }
