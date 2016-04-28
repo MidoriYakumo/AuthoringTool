@@ -7,6 +7,9 @@
 #include <fstream>
 #include <ios>
 
+const char *BodyReshaper::fileFlag = "-f";
+const char *BodyReshaper::fileLongFlag = "-file";
+
 BodyReshaper::BodyReshaper() : MPxCommand() {
 
 }
@@ -14,11 +17,6 @@ BodyReshaper::BodyReshaper() : MPxCommand() {
 BodyReshaper::~BodyReshaper() {
 
 }
-
-const char *fileFlag = "-f", *fileLongFlag = "-file";
-//const char *degreeFlag = "-d", *degreeLongFlag = "-degree";
-//const char *grammarFlag = "-g", *grammarLongFlag = "-grammar";
-//const char *iterationFlag = "-i", *iterationLongFlag = "-iteration";
 
 void* BodyReshaper::creator(){ 
 	
@@ -30,10 +28,7 @@ MSyntax BodyReshaper::newSyntax(){
 	MSyntax syntax;
 
 	syntax.addFlag( fileFlag, fileLongFlag, MSyntax::kString );  //文件名
-	//syntax.addFlag( degreeFlag, degreeLongFlag, MSyntax::kDouble );
-	//syntax.addFlag( grammarFlag, grammarLongFlag, MSyntax::kString );
-	//syntax.addFlag( iterationFlag, iterationLongFlag, MSyntax::kUnsigned );
-
+	
 	return syntax;
 }
 
@@ -41,18 +36,9 @@ MStatus BodyReshaper::doIt( const MArgList& args ){
 
 	MArgDatabase argData( syntax(), args ); //get the database of the arguments 调用一个command
 	MString filename;
-	//double degree = 25.7;
-	//MString grammar = "F\nF->F[+F]F[-F]F";
-	//unsigned iteration = 1;
-
+	
 	if( argData.isFlagSet( fileFlag ) ) //数据库有没有提供这个参数 -f，有-f就取出-f后面跟着的值
 		argData.getFlagArgument( fileFlag, 0, filename ); // -f , filename 
-	//if( argData.isFlagSet( degreeFlag) )
-	//	argData.getFlagArgument( degreeFlag, 0, degree );
-	//if( argData.isFlagSet( grammarFlag ) )
-	//	argData.getFlagArgument( grammarFlag, 0, grammar );
-	//if( argData.isFlagSet( iterationFlag ) )
-	//	argData.getFlagArgument( iterationFlag, 0, iteration );
 
 	cout << "Automatic rigging: " << filename << endl;
 

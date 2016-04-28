@@ -6,12 +6,12 @@
 #include <fstream>
 #include <ios>
 
-const char *heightFlag = "-h";
-const char *heightLongFlag = "-height";
-const char *weightFlag = "-w";
-const char *weightLongFlag = "-weight";
-const char *fileFlag = "-f"; 
-const char *fileLongFlag = "-file"; 
+const char *MorphShape::heightFlag = "-h";
+const char *MorphShape::heightLongFlag = "-height";
+const char *MorphShape::weightFlag = "-w";
+const char *MorphShape::weightLongFlag = "-weight";
+const char *MorphShape::fileFlag = "-f"; 
+const char *MorphShape::fileLongFlag = "-file"; 
 
 MorphShape::MorphShape() : MPxCommand()
 {
@@ -20,7 +20,6 @@ MorphShape::MorphShape() : MPxCommand()
 MorphShape::~MorphShape() 
 {
 }
-
 
 void* MorphShape::creator()
 { 

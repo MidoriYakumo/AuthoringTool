@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BodyReshaper", "MyPlugin.vcxproj", "{681412B0-F197-4A2F-9263-DEA2E8690146}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6695B452-0E23-4BA8-B879-67A27B24EEBD} = {6695B452-0E23-4BA8-B879-67A27B24EEBD}
+		{C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD} = {C7A9FBA1-CB30-410F-BA0F-CA4C9C6CFBAD}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutomaticRigging", "..\AutomaticRigging\AutomaticRigging.vcxproj", "{6695B452-0E23-4BA8-B879-67A27B24EEBD}"

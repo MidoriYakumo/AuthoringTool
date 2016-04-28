@@ -13,6 +13,8 @@ public:
 	static void* creator(); //固定的
 	static MSyntax newSyntax(); 
 	MStatus doIt( const MArgList& args );
+
+	static const char *fileFlag, *fileLongFlag;
 };
 
 class MorphShape : public MPxCommand
@@ -26,8 +28,9 @@ public:
 	MStatus doIt( const MArgList& args );
 
 	static EncodeModel em;
+
 	static const char *heightFlag, *heightLongFlag;
-	static const char *weightFlag, *weightLongFlag = "-weight";
-	static const char *fileFlag = "-f", *fileLongFlag = "-file";
+	static const char *weightFlag, *weightLongFlag;
+	static const char *fileFlag, *fileLongFlag;
 
 };
