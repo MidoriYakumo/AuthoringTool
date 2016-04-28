@@ -26,12 +26,12 @@ window -title "Figure Reshaper" myWindow;
         frameLayout -label "Step 4: Shape Fitting"
                     -collapsable true;
             columnLayout -rowSpacing 5;
-                intSliderGrp -field true -min 0 -max 1 -value 0 -label "Gender" "myGender";
-                floatSliderGrp -field true -min 30 -max 200 -value 80 -label "Weight" "myWeight";
-                floatSliderGrp -field true -min 100 -max 250 -value 190 -label "Height" "myHeight";
-                floatSliderGrp -field true -min 0 -max 150 -value 70 -label "BreastGirth" "myBreastGirth";
-                floatSliderGrp -field true -min 0 -max 200 -value 70 -label "WaistGirth" "myWaistGirth";
-                floatSliderGrp -field true -min 0 -max 200 -value 90 -label "HipsGirth" "myHipsGirth";
+                intSliderGrp -field true -min 0 -max 1 -value 1 -label "Gender(F/M)" "myGender";
+                floatSliderGrp -field true -min 30 -max 200 -value 80 -label "Weight(kg)" "myWeight";
+                floatSliderGrp -field true -min 100 -max 250 -value 190 -label "Height(cm)" "myHeight";
+                floatSliderGrp -field true -min 800 -max 1500 -value 1070 -label "BreastGirth(mm)" "myBreastGirth";
+                floatSliderGrp -field true -min 600 -max 1500 -value 812 -label "WaistGirth(mm)" "myWaistGirth";
+                floatSliderGrp -field true -min 900 -max 1500 -value 1077 -label "HipsGirth(mm)" "myHipsGirth";
             setParent ..;
         setParent ..;
 
