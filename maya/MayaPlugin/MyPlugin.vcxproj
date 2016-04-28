@@ -399,7 +399,7 @@
       <AdditionalDependencies>odbc32.lib;odbccp32.lib;OpenMaya.lib;OpenMayaRender.lib;Foundation.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>./$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>C:\Program Files\Autodesk\Maya2016\lib;%(AdditionalLibraryDirectories);C:\Program Files\Autodesk\Maya2016\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files\Autodesk\Maya2016\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>.\Release/MyPlugin.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <ImportLibrary>.\Release/MyPlugin.lib</ImportLibrary>

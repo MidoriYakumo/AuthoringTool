@@ -27,11 +27,7 @@ MStatus initializePlugin( MObject obj ) //打钩
 		+ plugin.loadPath() + "/MyPluginDialog\\\"\"; \n";  //menu插进主界面？
 
 	MGlobal::executeCommand( cmd, true );
-	
-	//---initialize encode---
-	MorphShape::em.LoadAvg();
-	MorphShape::em.LoadC();
-	
+		
     return status;
 }
 

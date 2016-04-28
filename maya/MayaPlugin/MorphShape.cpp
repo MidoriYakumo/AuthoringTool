@@ -6,6 +6,8 @@
 #include <fstream>
 #include <ios>
 
+#pragma comment( lib, "../MayaPlugin/x64/Release/EncodeModel.lib" )
+
 EncodeModel MorphShape::em;
 const char *MorphShape::heightFlag = "-h";
 const char *MorphShape::heightLongFlag = "-height";
@@ -74,9 +76,11 @@ MStatus MorphShape::doIt( const MArgList& args ){
 	em.LoadProjected();
 	em.LoadSemdata();
 
+	//cout << "Model: " << filename.asChar() << endl;
+
 	//---read model---
 	cout << "Reading OBJ..." << endl;
-	ReadObj("../s1p4.obj", vertices, faces);
+	ReadObj( "C:/Users/Liang Peng/Documents/GitHub/AuthoringTool/maya/s1p0.obj", vertices, faces );
 
 	//---encode---
 	cout << "Encoding..." << endl;
@@ -113,7 +117,7 @@ MStatus MorphShape::doIt( const MArgList& args ){
 
 	//---write model---
 	cout << "Writing OBJ..." << endl;
-	WriteObj("../s1p4_out.obj", modelout, faces);
+	WriteObj( "C:/Users/Liang Peng/Documents/GitHub/AuthoringTool/maya/out.obj", modelout, faces );
 
 	return MStatus::kSuccess;
 }
