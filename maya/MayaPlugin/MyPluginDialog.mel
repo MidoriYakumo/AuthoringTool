@@ -90,9 +90,9 @@ global proc myUpdate(){
     float $g = `intSliderGrp -query -value "myGender"`;
     float $w = `floatSliderGrp -query -value "myWeight"`;
     float $h = `floatSliderGrp -query -value "myHeight"`;
-    float $b = `floatSliderGrp -query -value "myBreastGirth";
-    float $a = `floatSliderGrp -query -value "myWaistGirth";
-    float $p = `floatSliderGrp -query -value "myHipsGirth";
+    float $b = `floatSliderGrp -query -value "myBreastGirth"`;
+    float $a = `floatSliderGrp -query -value "myWaistGirth"`;
+    float $p = `floatSliderGrp -query -value "myHipsGirth"`;
     //---update---
 	MorphShape -f $gMyBodyModel -h $h -w $w;
 }
