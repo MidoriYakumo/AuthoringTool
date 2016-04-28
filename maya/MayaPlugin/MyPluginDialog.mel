@@ -26,9 +26,12 @@ window -title "Figure Reshaper" myWindow;
         frameLayout -label "Step 4: Shape Fitting"
                     -collapsable true;
             columnLayout -rowSpacing 5;
+                intSliderGrp -field true -min 0 -max 1 -value 0 -label "Gender" "myGender";
                 floatSliderGrp -field true -min 30 -max 200 -value 80 -label "Weight" "myWeight";
                 floatSliderGrp -field true -min 100 -max 250 -value 190 -label "Height" "myHeight";
-                floatSliderGrp -field true -min 0 -max 1 -value 0.5 -label "Girth" "myGirth";
+                floatSliderGrp -field true -min 0 -max 150 -value 70 -label "BreastGirth" "myBreastGirth";
+                floatSliderGrp -field true -min 0 -max 200 -value 70 -label "WaistGirth" "myWaistGirth";
+                floatSliderGrp -field true -min 0 -max 200 -value 90 -label "HipsGirth" "myHipsGirth";
             setParent ..;
         setParent ..;
 
@@ -84,10 +87,12 @@ global proc myAutomaticRigging(){
 global proc myUpdate(){
 
 	global string $gMyBodyModel;
+    float $g = `intSliderGrp -query -value "myGender"`;
     float $w = `floatSliderGrp -query -value "myWeight"`;
     float $h = `floatSliderGrp -query -value "myHeight"`;
-    float $g = `floatSliderGrp -query -value "myGirth"`;
-
+    float $b = `floatSliderGrp -query -value "myBreastGirth";
+    float $a = `floatSliderGrp -query -value "myWaistGirth";
+    float $p = `floatSliderGrp -query -value "myHipsGirth";
     //---update---
 	MorphShape -f $gMyBodyModel -h $h -w $w;
 }
