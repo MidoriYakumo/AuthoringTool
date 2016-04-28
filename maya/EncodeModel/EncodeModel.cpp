@@ -1,5 +1,6 @@
 
 #include "EncodeModel.h"
+#include "../MayaPlugin/BodyReshaper.h"
 
 void EncodeModel::SetFilepath( string filepath ){
 	this->filepath = filepath;
@@ -7,7 +8,7 @@ void EncodeModel::SetFilepath( string filepath ){
 
 void EncodeModel::LoadFaces(){
 
-	fstream fin( "C:/Users/Liang Peng/Documents/GitHub/AuthoringTool/maya/EncodeModel/data/faces.dat", ios::in | ios::binary );
+	fstream fin( MorphShape::pluginPath + "/../EncodeModel/data/faces.dat", ios::in | ios::binary );
 	int a;
 
 	faces = MatrixXi( 12894, 3 );
@@ -21,7 +22,7 @@ void EncodeModel::LoadFaces(){
 
 void EncodeModel::LoadNeigh(){
 
-	fstream fin( "C:/Users/Liang Peng/Documents/GitHub/AuthoringTool/maya/EncodeModel/data/neigh.dat", ios::in | ios::binary );
+	fstream fin( MorphShape::pluginPath + "/../EncodeModel/data/faces.dat", ios::in | ios::binary );
 	int a;
 
 	neigh = MatrixXi( 12894, 3 );
@@ -35,7 +36,7 @@ void EncodeModel::LoadNeigh(){
 
 void EncodeModel::LoadReconmean(){
 
-	fstream fin( "C:/Users/Liang Peng/Documents/GitHub/AuthoringTool/maya/EncodeModel/data/reconmean.dat", ios::in | ios::binary );
+	fstream fin( MorphShape::pluginPath + "/../EncodeModel/data/faces.dat", ios::in | ios::binary );
 	float a, b, c;
 
 	reconmean = MatrixXd( 6449, 3 );
@@ -51,7 +52,7 @@ void EncodeModel::LoadReconmean(){
 
 void EncodeModel::LoadC(){
 	
-	fstream fin( "C:/Users/Liang Peng/Documents/GitHub/AuthoringTool/maya/EncodeModel/data/C.dat", ios::in | ios::binary );
+	fstream fin( MorphShape::pluginPath + "/../EncodeModel/data/faces.dat", ios::in | ios::binary );
 	float f;
 
 	C = MatrixXd( 1064, 193410 );
@@ -65,7 +66,7 @@ void EncodeModel::LoadC(){
 
 void EncodeModel::LoadCoeffs(){
 	
-	fstream fin( "C:/Users/Liang Peng/Documents/GitHub/AuthoringTool/maya/EncodeModel/data/coeffs.dat", ios::in | ios::binary );
+	fstream fin( MorphShape::pluginPath + "/../EncodeModel/data/faces.dat", ios::in | ios::binary );
 	float f;
 
 	coeffs = MatrixXd( 193410, 1064 );
@@ -79,7 +80,7 @@ void EncodeModel::LoadCoeffs(){
 
 void EncodeModel::LoadAvg(){
 	
-	fstream fin( "C:/Users/Liang Peng/Documents/GitHub/AuthoringTool/maya/EncodeModel/data/avg.dat", ios::in | ios::binary );
+	fstream fin( MorphShape::pluginPath + "/../EncodeModel/data/faces.dat", ios::in | ios::binary );
 	float f;
 
 	avg = MatrixXd( 193410, 1 );
@@ -91,7 +92,7 @@ void EncodeModel::LoadAvg(){
 
 void EncodeModel::LoadProjected(){
 
-	fstream fin( "C:/Users/Liang Peng/Documents/GitHub/AuthoringTool/maya/EncodeModel/data/projected.dat", ios::in | ios::binary );
+	fstream fin( MorphShape::pluginPath + "/../EncodeModel/data/faces.dat", ios::in | ios::binary );
 	float f;
 
 	projected = MatrixXd( 1064, 1064 );
@@ -105,7 +106,7 @@ void EncodeModel::LoadProjected(){
 
 void EncodeModel::LoadSemdata(){
 
-	fstream fin( "C:/Users/Liang Peng/Documents/GitHub/AuthoringTool/maya/EncodeModel/data/semdata.dat", ios::in | ios::binary );
+	fstream fin( MorphShape::pluginPath + "/../EncodeModel/data/faces.dat", ios::in | ios::binary );
 	float f;
 
 	semdata = MatrixXd( 1064, 25 );
