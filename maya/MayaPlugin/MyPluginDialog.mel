@@ -89,9 +89,25 @@ global proc myUpdate(){
     float $g = `floatSliderGrp -query -value "myGirth"`;
 
     //---update---
-	MorphShape -f $gMyBodyModel -h $h -w $w;
+	loadPlugin objExport;
+	string $filename = pathpart( $gMyBodyModel ) + "/out.obj";
+    select -r body:Mesh;
+	file -force -es -type "OBJexport" -options "group=0;ptgroups=0;materials=0;smoothing=0;normals=0" -pr $filename;
+    MorphShape -f $filename -h $h -w $w;
 }
 
 global proc myCancel(){
     deleteUI myWindow;
+}
+
+global proc string pathpart( string $path ){
+
+  string $dir = match( "^.*/", $path );
+  int $sz = size( $dir );
+  
+  if ( ( $sz > 1 ) && ( substring( $dir, $sz, $sz ) == "/" ) ) {
+    $dir = substring( $dir, 1, ($sz - 1) );
+  }
+  
+  return $dir;
 }

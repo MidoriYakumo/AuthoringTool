@@ -30,10 +30,16 @@ public:
 	static MSyntax newSyntax(); 
 	MStatus doIt( const MArgList& args );
 
+	void RotateX( MatrixXd &vertices );
+
 	static int id;
 	static string pluginPath;
 	static EncodeModel em;
+	static const char *fileFlag, *fileLongFlag;
+	static const char *genderFlag, *genderLongFlag;
 	static const char *heightFlag, *heightLongFlag;
 	static const char *weightFlag, *weightLongFlag;
-	static const char *fileFlag, *fileLongFlag;
+	static const char *breastFlag, *breastLongFlag;
+	static const char *waistFlag, *waistLongFlag;
+	static const char *hipFlag, *hipLongFlag;
 };

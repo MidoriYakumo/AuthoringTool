@@ -17,6 +17,14 @@ const char *MorphShape::weightFlag = "-w";
 const char *MorphShape::weightLongFlag = "-weight";
 const char *MorphShape::fileFlag = "-f";
 const char *MorphShape::fileLongFlag = "-file";
+const char *MorphShape::genderFlag = "-g";
+const char *MorphShape::genderLongFlag = "-gender";
+const char *MorphShape::breastFlag = "-bg";
+const char *MorphShape::breastLongFlag = "-breastgirth";
+const char *MorphShape::waistFlag = "-wg";
+const char *MorphShape::waistLongFlag = "-waistgirth";
+const char *MorphShape::hipFlag = "-hg";
+const char *MorphShape::hipLongFlag = "-hipgirth";
 
 MorphShape::MorphShape() : MPxCommand()
 {
@@ -37,6 +45,10 @@ MSyntax MorphShape::newSyntax()
 	syntax.addFlag(fileFlag, fileLongFlag, MSyntax::kString );  //文件名
 	syntax.addFlag(heightFlag, heightLongFlag, MSyntax::kDouble);
 	syntax.addFlag(weightFlag, weightLongFlag, MSyntax::kDouble);
+	syntax.addFlag(genderFlag, genderLongFlag, MSyntax::kDouble);
+	syntax.addFlag(breastFlag, breastLongFlag, MSyntax::kDouble);
+	syntax.addFlag(waistFlag, waistLongFlag, MSyntax::kDouble);
+	syntax.addFlag(hipFlag, hipLongFlag, MSyntax::kDouble);
 	return syntax;
 }
 
@@ -46,6 +58,10 @@ MStatus MorphShape::doIt( const MArgList& args ){
 	MString filename;
 	double height = 0.0;
 	double weight = 0.0;
+	double gender = 1.;
+	double breast = 1000.;
+	double waist = 800.;
+	double hip = 1000.;
 
 	if (argData.isFlagSet(fileFlag)) //数据库有没有提供这个参数 -f，有-f就取出-f后面跟着的值
 		argData.getFlagArgument(fileFlag, 0, filename); // -f , filename 
@@ -56,8 +72,24 @@ MStatus MorphShape::doIt( const MArgList& args ){
 	if (argData.isFlagSet(weightFlag))
 		argData.getFlagArgument(weightFlag, 0, weight);
 
-	cout << "height" << height << endl;
-	cout << "weight" << weight << endl;
+	if (argData.isFlagSet(genderFlag))
+		argData.getFlagArgument(genderFlag, 0, gender);
+
+	if (argData.isFlagSet(breastFlag))
+		argData.getFlagArgument(breastFlag, 0, breast);
+
+	if (argData.isFlagSet(waistFlag))
+		argData.getFlagArgument(waistFlag, 0, waist);
+
+	if (argData.isFlagSet(hipFlag))
+		argData.getFlagArgument(hipFlag, 0, hip);
+
+	cout << "Gender: " << ( gender < .5 ? "Female" : "Male" ) << endl;
+	cout << "Height: " << height << endl;
+	cout << "Weight: " << weight << endl;
+	cout << "Breast Girth: " << breast << endl;
+	cout << "Waist Girth: " << waist << endl;
+	cout << "Hip Girth " << hip << endl;
 	 
 	fstream fout("out.txt", ios::out);
 	MatrixXd vertices;
@@ -96,11 +128,15 @@ MStatus MorphShape::doIt( const MArgList& args ){
 
 	//---morph to---
 	cout << "Morphing..." << endl;
-	target = MatrixXd(1, 2);
-	target << weight, height;
-	semdata = MatrixXd(1064, 2);
-	semdata.col(0) = em.semdata.col(5);
-	semdata.col(1) = em.semdata.col(2);
+	target = MatrixXd(1, 6);
+	target << gender, weight, height, breast, waist, hip;
+	semdata = MatrixXd(1064, 6);
+	semdata.col(0) = em.semdata.col(1);
+	semdata.col(1) = em.semdata.col(5);
+	semdata.col(2) = em.semdata.col(2);
+	semdata.col(3) = em.semdata.col(16);
+	semdata.col(4) = em.semdata.col(17);
+	semdata.col(5) = em.semdata.col(18);
 	morphed = MorphTo(projected, target, em.projected, semdata);
 
 	//---unproject from PCA space---
@@ -119,15 +155,29 @@ MStatus MorphShape::doIt( const MArgList& args ){
 
 	//---write model---
 	cout << "Writing OBJ..." << endl;
-	WriteObj( MorphShape::pluginPath + "/../out.obj", modelout, faces );
+	WriteObj( MorphShape::pluginPath + "/../out1.obj", modelout, faces );
 
 	MString command;
 	
 	command = command + "file -import -type \"OBJ\" -namespace \"body"
 		+ MorphShape::id + "\" -pr \"" + MorphShape::pluginPath.c_str()
-		+ "/../out.obj\";" + "setAttr \"body" + MorphShape::id + ":Mesh.rotateX\" -90;";
+		+ "/../out1.obj\";" + "setAttr \"body" + MorphShape::id 
+		+ ":Mesh.rotateX\" -90; select -r body" + MorphShape::id 
+		+ ":Mesh; setAttr \"body" + MorphShape::id + ":Mesh.translateX\" " 
+		+ ( MorphShape::id + 1. ) + ";";
 	++MorphShape::id;
 	MGlobal::executeCommand( command );
 
 	return MStatus::kSuccess;
+}
+
+void MorphShape::RotateX( MatrixXd &vertices ){
+
+	for( int i = 0; i < vertices.rows(); ++i ){
+
+		double tmp = vertices( i, 1 );
+
+		vertices( i, 1 ) = vertices( i, 2 );
+		vertices( i, 2 ) = -tmp;
+	}
 }
