@@ -8,7 +8,7 @@ Instructor: Stephen Lane
 
 University of Pennsylvania
 
-# Papar
+# Paper
 * Shizhe Zhou, Hongbo Fu, Ligang Liu, Daniel Cohen-Or, Xiaoguang Ha. Parametric Reshaping of Human Bodies in Images. ACM Transactions on Graphics, Vol. 29, No. 4, Article 126, Publication date: July 2010.
 * N. Hasler, C. Stoll, M. Sunkel, B. Rosenhahn, and H.-P. Seidel. A Statistical Model of Human Pose and Body Shape. EUROGRAPHICS 2009 / P. Dutré and M. Stamminger.
 * Ilya Baran, Jovan Popovic. Automatic Rigging and Animation of 3D Characters. ACM SIGGRAPH 2007 conference proceedings.
@@ -36,3 +36,18 @@ The project is to create a very convenient tool that could allow users convenien
 
 # Roadmap
 <img src="./img/3.png" height=400><img />
+
+# Acknowledgement
+<pre>
+@INPROCEEDINGS{HasStoSunRosSei09,
+  author = {N. Hasler and C. Stoll and M. Sunkel and B. Rosenhahn and H.-P. Seidel},
+  title = {A Statistical Model of Human Pose and Body Shape},
+  booktitle = {Computer Graphics Forum (Proc. Eurographics 2008)},
+  year = 2009,
+  editor = {P. Dutr{'e} and M. Stamminger},
+  volume = 2,
+  number = 28,
+  address = {Munich, Germany},
+  month = MAR
+}
+</pre>
