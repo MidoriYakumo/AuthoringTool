@@ -89,9 +89,8 @@ MStatus MorphShape::doIt( const MArgList& args ){
 	cout << "Weight: " << weight << endl;
 	cout << "Breast Girth: " << breast << endl;
 	cout << "Waist Girth: " << waist << endl;
-	cout << "Hip Girth " << hip << endl;
+	cout << "Hip Girth: " << hip << endl;
 	 
-	fstream fout("out.txt", ios::out);
 	MatrixXd vertices;
 	MatrixXi faces;
 	MatrixXd encoded;
